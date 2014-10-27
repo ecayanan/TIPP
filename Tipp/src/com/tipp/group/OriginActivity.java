@@ -50,13 +50,13 @@ public class OriginActivity extends ActionBarActivity {
         new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"});		
 	}
 	
-	private class DownloadJSONTask extends AsyncTask<String,Integer,JSONObject> {
+	private class DownloadJSONTask extends AsyncTask<String,Integer,JSONArray> {
         
 
-        protected JSONObject doInBackground(String... urls) {
-            JSONObject result = null;
+        protected JSONArray doInBackground(String... urls) {
+            JSONArray result = null;
             DefaultHttpClient client = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet("http://time.jsontest.com"); // Don't do this
+            HttpGet httpGet = new HttpGet(urls[0]); // Don't do this
             Log.d("JSON Thing","lets get started");
             //test.setText("before try");
             try {
@@ -80,7 +80,7 @@ public class OriginActivity extends ActionBarActivity {
                     }
                     //test.setText("doinbackground");
                     Log.d("MY_APP",response);
-                    result = new JSONObject(response);
+                    result = new JSONArray(response);
         		} else {
         			//test.setText(statusCode);
         		} 
@@ -97,16 +97,24 @@ public class OriginActivity extends ActionBarActivity {
             return result;
         }
 
-        protected void onPostExecute(JSONObject result) {
+        protected void onPostExecute(JSONArray result) {
         	test.setText("onpostexecute");
             try {
             	String tempArray = "";
             	String temp = "";
 
+            	for(int i = 0; i < result.length(); i++)
+            	{
+            		JSONObject childJSON = result.getJSONObject(i);
+            		temp = childJSON.getString("name");
+            		tempArray += temp;
+            		TextView myTextView = (TextView) findViewById(R.id.text1);
+            		myTextView.setText(temp);
 
+            	}
             		
-            	temp = result.getString("time");
-            	test.setText(temp);
+            	//temp = result.getString("time");
+            	test.setText(tempArray);
             } catch (Exception e) {} // Again don't do this
         }
 
