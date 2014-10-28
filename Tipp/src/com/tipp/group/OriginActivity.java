@@ -50,11 +50,11 @@ public class OriginActivity extends ActionBarActivity {
         new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"});		
 	}
 	
-	private class DownloadJSONTask extends AsyncTask<String,Integer,JSONArray> {
+	private class DownloadJSONTask extends AsyncTask<String,Integer,JSONObject> {
         
 
-        protected JSONArray doInBackground(String... urls) {
-            JSONArray result = null;
+        protected JSONObject doInBackground(String... urls) {
+            JSONObject result = null;
             DefaultHttpClient client = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(urls[0]); // Don't do this
             Log.d("JSON Thing","lets get started");
@@ -80,7 +80,7 @@ public class OriginActivity extends ActionBarActivity {
                     }
                     //test.setText("doinbackground");
                     Log.d("MY_APP",response);
-                    result = new JSONArray(response);
+                    result = new JSONObject(response);
         		} else {
         			//test.setText(statusCode);
         		} 
@@ -97,25 +97,42 @@ public class OriginActivity extends ActionBarActivity {
             return result;
         }
 
-        protected void onPostExecute(JSONArray result) {
+        protected void onPostExecute(JSONObject result) {
         	test.setText("onpostexecute");
             try {
             	String tempArray = "";
+            	String tempArray1 = "";
             	String temp = "";
 
-            	for(int i = 0; i < result.length(); i++)
+            	JSONArray groupJSON = result.getJSONArray("groups");
+            	JSONArray groupMembersJSON = result.getJSONArray("group_members");
+            	
+            	//Log.d("ONPOSTEXECUTE", "starting post execute");
+            	for(int i = 0; i < groupJSON.length(); i++)
             	{
-            		JSONObject childJSON = result.getJSONObject(i);
-            		temp = childJSON.getString("name");
+            		JSONObject childGroupJSON = groupJSON.getJSONObject(i);
+            		temp = childGroupJSON.getString("name");
             		tempArray += temp;
-            		TextView myTextView = (TextView) findViewById(R.id.text1);
-            		myTextView.setText(temp);
-
+            		//TextView myTextView = (TextView) findViewById(R.id.text1);
+            		//myTextView.setText(temp);            		
             	}
+                //Log.d("GROUPS_LIST", tempArray);
+
+            	for(int i = 0; i < groupMembersJSON.length(); i++)
+            	{
+            		JSONObject childGroupJSON = groupJSON.getJSONObject(i);
+            		temp = childGroupJSON.getString("name");
+            		tempArray1 += temp;
+            		//TextView myTextView = (TextView) findViewById(R.id.text1);
+            		//myTextView.setText(temp);            		
+            	}            	
+
             		
             	//temp = result.getString("time");
-            	test.setText(tempArray);
-            } catch (Exception e) {} // Again don't do this
+            	test.setText("ALL GROUPS   " +tempArray + "    USER_GROUPS    " +tempArray1);
+            } catch (Exception e) {
+            	Log.d("EXCEPTION", e.getMessage());
+            } // Again don't do this
         }
 
     }	
