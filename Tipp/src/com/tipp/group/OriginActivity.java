@@ -5,37 +5,54 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.MenuItem.OnActionExpandListener;
 
 import com.tipp.R;
 
-public class OriginActivity extends ActionBarActivity {
+public class OriginActivity extends ActionBarActivity{
 
-	private TextView test;
+	private Bundle sBundle = new Bundle();
 	
 	@Override
 	  public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.mainmenu, menu);
 	    MenuItem searchItem = menu.findItem(R.id.action_search);
-	    SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+	    searchItem.setOnActionExpandListener(new OnActionExpandListener(){
+
+			@Override
+			public boolean onMenuItemActionExpand(MenuItem item) {
+				FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+				OnSearchFragment fragment = new OnSearchFragment();
+				fragment.setArguments(sBundle);
+				fragmentTransaction.replace(R.id.origin_container, fragment);
+				fragmentTransaction.addToBackStack(null);
+				fragmentTransaction.commit();
+				return true;
+			}
+			@Override
+			public boolean onMenuItemActionCollapse(MenuItem item) {
+				new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"});		
+				return true;
+			}
+	    	
+	    });
 	    // Configure the search info and add any event listeners
 	    return super.onCreateOptionsMenu(menu);
 
@@ -45,14 +62,14 @@ public class OriginActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_origin);
-		test = (TextView) findViewById(R.id.text1);
-		//test.setText("OnCreate");
         new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"});		
+
 	}
 	
 	private class DownloadJSONTask extends AsyncTask<String,Integer,JSONObject> {
+        List <String> groupList = new ArrayList<String>();
+        List <String> groupMemberList = new ArrayList<String>();
         
-
         protected JSONObject doInBackground(String... urls) {
             JSONObject result = null;
             DefaultHttpClient client = new DefaultHttpClient();
@@ -61,7 +78,6 @@ public class OriginActivity extends ActionBarActivity {
             //test.setText("before try");
             try {
                 //test.setText("before response");
-
                 HttpResponse execute_response = client.execute(httpGet);
                 //test.setText("IT SHOWED UP");
         		StatusLine statusLine = execute_response.getStatusLine();
@@ -84,26 +100,18 @@ public class OriginActivity extends ActionBarActivity {
         		} else {
         			//test.setText(statusCode);
         		} 
-
             } catch (Exception e) {
             	
             	StringWriter sw = new StringWriter();
             	e.printStackTrace(new PrintWriter(sw));
-            	String exceptionAsString = sw.toString();
-            	
-            	//test.setText(exceptionAsString);
-            } // Don't do this
 
+            } // Don't do this
             return result;
         }
 
         protected void onPostExecute(JSONObject result) {
-        	test.setText("onpostexecute");
+        	//test.setText("onpostexecute");
             try {
-            	String tempArray = "";
-            	String tempArray1 = "";
-            	String temp = "";
-
             	JSONArray groupJSON = result.getJSONArray("groups");
             	JSONArray groupMembersJSON = result.getJSONArray("group_members");
             	
@@ -111,29 +119,34 @@ public class OriginActivity extends ActionBarActivity {
             	for(int i = 0; i < groupJSON.length(); i++)
             	{
             		JSONObject childGroupJSON = groupJSON.getJSONObject(i);
-            		temp = childGroupJSON.getString("name");
-            		tempArray += temp;
-            		//TextView myTextView = (TextView) findViewById(R.id.text1);
-            		//myTextView.setText(temp);            		
+            		groupList.add(childGroupJSON.getString("name"));           		
             	}
                 //Log.d("GROUPS_LIST", tempArray);
-
             	for(int i = 0; i < groupMembersJSON.length(); i++)
             	{
             		JSONObject childGroupJSON = groupJSON.getJSONObject(i);
-            		temp = childGroupJSON.getString("name");
-            		tempArray1 += temp;
-            		//TextView myTextView = (TextView) findViewById(R.id.text1);
-            		//myTextView.setText(temp);            		
-            	}            	
-
-            		
-            	//temp = result.getString("time");
-            	test.setText("ALL GROUPS   " +tempArray + "    USER_GROUPS    " +tempArray1);
+            		groupMemberList.add(childGroupJSON.getString("name"));           		
+            	}
+            	sBundle.putInt("groupSize", groupJSON.length());
+            	sBundle.putStringArrayList("groupStringArray", (ArrayList<String>) groupList);
+            	Bundle gBundle = new Bundle();
+            	gBundle.putInt("groupMemberSize", groupMembersJSON.length());
+            	gBundle.putStringArrayList("groupMemberStringArray", (ArrayList<String>) groupList);
+            	startGroupFragment(gBundle);
             } catch (Exception e) {
             	Log.d("EXCEPTION", e.getMessage());
             } // Again don't do this
         }
+        
+        public void startGroupFragment(Bundle bundle){
+    		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    		GroupFragment fragment = new GroupFragment();
+    		fragment.setArguments(bundle);
+    		fragmentTransaction.replace(R.id.origin_container, fragment);
+    		fragmentTransaction.addToBackStack(null);
+    		fragmentTransaction.commit();
+        }
 
-    }	
+    }
+	
 }
