@@ -86,7 +86,13 @@ public class LoginActivity extends FragmentActivity {
 	        if (state.isOpened()) {
 	            // If the session state is open:
 	            // Show the authenticated fragment
-	            showFragment(SELECTION, false);
+	            
+	        	//showFragment(SELECTION, false);
+	        	
+	        	Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
+	    		startActivity(intent);
+	        	
+	        	//showFragment(SELECTION, false);
 	        } else if (state.isClosed()) {
 	            // If the session state is closed:
 	            // Show the login fragment
@@ -103,7 +109,9 @@ public class LoginActivity extends FragmentActivity {
 	    if (session != null && session.isOpened()) {
 	        // if the session is already open,
 	        // try to show the selection fragment
-	        showFragment(SELECTION, false);
+	        //showFragment(SELECTION, false);
+	    	Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
+			startActivity(intent);
 	    } else {
 	        // otherwise present the splash screen
 	        // and ask the person to login.
