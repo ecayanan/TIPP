@@ -87,8 +87,8 @@ public class LoginActivity extends FragmentActivity {
 	            // If the session state is open:
 	            // Show the authenticated fragment
 	            
-	        	//showFragment(SELECTION, false);
-	        	
+	        	showFragment(SELECTION, false);
+	        	killActivity();
 	        	Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
 	    		startActivity(intent);
 	        	
@@ -110,8 +110,10 @@ public class LoginActivity extends FragmentActivity {
 	        // if the session is already open,
 	        // try to show the selection fragment
 	        //showFragment(SELECTION, false);
+	        killActivity();
 	    	Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
 			startActivity(intent);
+			
 	    } else {
 	        // otherwise present the splash screen
 	        // and ask the person to login.
@@ -135,6 +137,11 @@ public class LoginActivity extends FragmentActivity {
 	    uiHelper.onActivityResult(requestCode, resultCode, data);
 	}
 
+	void killActivity()
+	{
+	    finish();
+	}
+	
 	@Override
 	public void onDestroy() {
 	    super.onDestroy();
