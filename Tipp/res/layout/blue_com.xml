@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+     
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" >
+     
+            <TextView
+                android:id="@+id/gsearchtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="35dp"
+                android:background="#E9C2A6"
+                android:textColor="#ececec"
+                android:ellipsize="end"
+                android:padding="2dp"
+                />
+     
+             <ImageView
+                 android:id="@+id/imageView1"
+                 android:layout_width="50dp"
+                 android:layout_height="30dp"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:src="@drawable/plus" />
+     
+        </RelativeLayout>
+     
+    </LinearLayout>
+
