@@ -18,76 +18,46 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.tipp.R;
      
      
-    public class OnSearchFragment extends Fragment{
-            //private SearchView searchview;
-            private String searchStr;
-            LinearLayout linearLayoutSearch;
-            ArrayList <String> groupList;
-            View view;
-           
-            public void filterText(String str) {
-                    searchStr = str;
-                    if(str.length() > 0 && linearLayoutSearch != null){
-                            linearLayoutSearch.removeAllViews();
-                            if(groupList != null){
-                                    for(int i = 0; i < groupList.size(); i++){
-                                            if(groupList.toArray()[i].toString().toLowerCase().contains(str.toLowerCase())){
-                                                    TextView text = new TextView(view.getContext());
-                                                    text.setText(groupList.toArray()[i].toString());
-                                                    text.setTextSize(40);
-                                                    linearLayoutSearch.addView(text);
-                                            }
-                                    }
-                            }
-                    }
-            }
-            /*
-            @Override
-            public void onPrepareOptionsMenu(Menu menu) {
-                    super.onPrepareOptionsMenu(menu);
-                    MenuItem menuItem =   menu.findItem(R.id.action_search);
-                    searchview = (SearchView) menuItem.getActionView();
-            }
-            */
-            @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-                    view = inflater.inflate(R.layout.fragment_on_search, container, false);
-                    int groupSize = getArguments().getInt("groupSize", 0);
-                    groupList = getArguments().getStringArrayList("groupStringArray");
-                    linearLayoutSearch = (LinearLayout)view.findViewById(R.id.linearlayoutsearch);
-                              
-                    TextView textArr[] = new TextView[groupSize];
-                    for(int i = 0; i < groupSize; i++){
-                    	View red;
-                    	  //grab red square xml
-                        if( i % 2 == 0)
-                                red = inflater.inflate(R.layout.light_blue, linearLayoutSearch, false);
-                        else
-                                red = inflater.inflate(R.layout.blue_com, linearLayoutSearch, false);
-                       
-                        //text set
-                        TextView text = (TextView) red.findViewById(R.id.gsearchtitle);
-                        text.setText((CharSequence) groupList.toArray()[i]);
-                       
-                    //add view to linearLayout
-                    linearLayoutSearch.addView(red);
-                    }
-            return view;
-        }
+public class OnSearchFragment extends ListFragment{
+    
+	private String searchText = "";
+	ArrayAdapter<String> adapter;
+	
+	public void searchFilterText(String str){
+		searchText = str;
+		if(adapter != null)
+			adapter.getFilter().filter(searchText);
+	}
+    @Override
+     public void onActivityCreated(Bundle savedInstanceState) {
+	    final String searchStr;
+	    LinearLayout linearLayoutSearch;
+	    ArrayList <String> groupList;
+	    View view;
+  
+       //get bundle and get all groups array
+       groupList = getArguments().getStringArrayList("groupStringArray");
+       super.onActivityCreated(savedInstanceState);
+       adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, groupList);
+       setListAdapter(adapter);
+     }
+
+     @Override
+     public void onListItemClick(ListView l, View v, int position, long id) {
+       // do something with the data
+     }
             private class AddToGroup extends AsyncTask<String,Integer,String> {
             String data = "";
             String Content = "";
