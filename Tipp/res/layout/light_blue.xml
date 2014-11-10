@@ -4,7 +4,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-     
+
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="fill_parent" >
@@ -21,6 +21,8 @@
                 android:textColor="#ececec"
                 android:ellipsize="end"
                 android:padding="2dp"
+                android:focusable="false"
+                android:clickable="true"
                 />
      
              <ImageView

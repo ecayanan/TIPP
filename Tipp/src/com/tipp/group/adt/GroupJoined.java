@@ -33,4 +33,12 @@ public class GroupJoined implements Group{
 	public void setMembers(List<User> members) {
 		this.members = members;
 	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
 }

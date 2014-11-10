@@ -17,6 +17,7 @@ public class GroupManager {
 	public GroupManager(JSONObject obj){
 		gj = new ArrayList<GroupJoined>();
 		gnj = new ArrayList<GroupNotJoined>();
+
 		
 		try {
 			JSONArray groupNotJoinedJSON = obj.getJSONArray("groupsNotJoined");
@@ -25,14 +26,18 @@ public class GroupManager {
 	        //Log.d("ONPOSTEXECUTE", "starting post execute");
 	        for(int i = 0; i < groupNotJoinedJSON.length(); i++)
 	        {
-	                JSONObject childGroupJSON = groupNotJoinedJSON.getJSONObject(i);
-	                gnj.add(new GroupNotJoined (childGroupJSON.getString("name")));                       
-	        }
+	        	JSONObject childGroupJSON = groupNotJoinedJSON.getJSONObject(i);
+	        	GroupNotJoined group = new GroupNotJoined (childGroupJSON.getString("name"));
+                group.setGroupId(""+childGroupJSON.getInt("id"));
+                gnj.add(group);
+        }
 	        //Log.d("GROUPS_LIST", tempArray);
 	        for(int i = 0; i < groupJoinedJSON.length(); i++)
 	        {
 	                JSONObject childGroupJSON = groupJoinedJSON.getJSONObject(i);
-	                gj.add(new GroupJoined(childGroupJSON.getString("name")));                         
+		        	GroupJoined group = new GroupJoined (childGroupJSON.getString("name"));
+	                group.setGroupId(""+childGroupJSON.getInt("id"));
+	                gj.add(group);                         
 	        }
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -54,14 +59,30 @@ public class GroupManager {
 		return groupNames;
 	}
 	
+	public ArrayList<String> getGroupJoinedId(){
+		ArrayList<String> groupNames = new ArrayList<String>();
+		for(int i = 0; i < gj.size(); i++)
+			groupNames.add(((GroupJoined) gj.toArray()[i]).getGroupId());
+		return groupNames;
+	}
+	
+	public ArrayList<String> getGroupNotJoinedId(){
+		ArrayList<String> groupNames = new ArrayList<String>();
+		for(int i = 0; i < gnj.size(); i++)
+			groupNames.add(((GroupNotJoined) gnj.toArray()[i]).getGroupId());
+		return groupNames;
+	}
+	
 	public Bundle getGroupJoinedBundle(){
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("groupMemberStringArray", getGroupJoinedName());
+		bundle.putStringArrayList("groupIds", getGroupJoinedId());
 		return bundle;
 	}
 	public Bundle getGroupNotJoinedBundle(){
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("groupStringArray", getGroupNotJoinedName());
+		bundle.putStringArrayList("groupIds", getGroupJoinedId());
 		return bundle;
 	}
 }
