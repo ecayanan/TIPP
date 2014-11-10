@@ -28,7 +28,7 @@ public class GroupManager {
 	        {
 	        	JSONObject childGroupJSON = groupNotJoinedJSON.getJSONObject(i);
 	        	GroupNotJoined group = new GroupNotJoined (childGroupJSON.getString("name"));
-                group.setGroupId(""+childGroupJSON.getInt("id"));
+                group.setGroupId(childGroupJSON.getInt("id"));
                 gnj.add(group);
         }
 	        //Log.d("GROUPS_LIST", tempArray);
@@ -36,7 +36,7 @@ public class GroupManager {
 	        {
 	                JSONObject childGroupJSON = groupJoinedJSON.getJSONObject(i);
 		        	GroupJoined group = new GroupJoined (childGroupJSON.getString("name"));
-	                group.setGroupId(""+childGroupJSON.getInt("id"));
+	                group.setGroupId(childGroupJSON.getInt("id"));
 	                gj.add(group);                         
 	        }
 		} catch (JSONException e) {
@@ -59,15 +59,15 @@ public class GroupManager {
 		return groupNames;
 	}
 	
-	public ArrayList<String> getGroupJoinedId(){
-		ArrayList<String> groupNames = new ArrayList<String>();
+	public ArrayList<Integer> getGroupJoinedId(){
+		ArrayList<Integer> groupNames = new ArrayList<Integer>();
 		for(int i = 0; i < gj.size(); i++)
 			groupNames.add(((GroupJoined) gj.toArray()[i]).getGroupId());
 		return groupNames;
 	}
 	
-	public ArrayList<String> getGroupNotJoinedId(){
-		ArrayList<String> groupNames = new ArrayList<String>();
+	public ArrayList<Integer> getGroupNotJoinedId(){
+		ArrayList<Integer> groupNames = new ArrayList<Integer>();
 		for(int i = 0; i < gnj.size(); i++)
 			groupNames.add(((GroupNotJoined) gnj.toArray()[i]).getGroupId());
 		return groupNames;
@@ -76,13 +76,13 @@ public class GroupManager {
 	public Bundle getGroupJoinedBundle(){
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("groupMemberStringArray", getGroupJoinedName());
-		bundle.putStringArrayList("groupIds", getGroupJoinedId());
+		bundle.putIntegerArrayList("groupIds", getGroupJoinedId());
 		return bundle;
 	}
 	public Bundle getGroupNotJoinedBundle(){
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("groupStringArray", getGroupNotJoinedName());
-		bundle.putStringArrayList("groupIds", getGroupJoinedId());
+		bundle.putIntegerArrayList("groupIds", getGroupNotJoinedId());
 		return bundle;
 	}
 }

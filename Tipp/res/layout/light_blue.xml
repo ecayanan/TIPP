@@ -4,7 +4,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-
+     
         <RelativeLayout
             android:layout_height="wrap_content"
             android:layout_width="fill_parent" >
@@ -13,16 +13,12 @@
                 android:id="@+id/gsearchtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
                 android:singleLine="true"
                 android:text=""
                 android:textSize="35dp"
                 android:background="#4A6DB4"
                 android:textColor="#ececec"
                 android:ellipsize="end"
-                android:padding="2dp"
-                android:focusable="false"
-                android:clickable="true"
                 />
      
              <ImageView

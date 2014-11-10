@@ -35,7 +35,7 @@ public class OnSearchListFragment extends ListFragment{
 	private String searchText = "";
 	ArrayAdapter<String> adapter;
     ArrayList <String> groupNames;
-    ArrayList <String> groupIds;
+    ArrayList <Integer> groupIds;
 	private int grp;
 	
 	public void searchFilterText(String str){
@@ -48,7 +48,7 @@ public class OnSearchListFragment extends ListFragment{
      public void onActivityCreated(Bundle savedInstanceState) {
   
        //get bundle and get all groups array
-	    groupIds = getArguments().getStringArrayList("groupIds");
+	   groupIds = getArguments().getIntegerArrayList("groupIds");
        groupNames = getArguments().getStringArrayList("groupStringArray");
        super.onActivityCreated(savedInstanceState);
        adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, groupNames);
@@ -57,8 +57,9 @@ public class OnSearchListFragment extends ListFragment{
 
      @Override
      public void onListItemClick(ListView l, View v, int position, long id) {
-    	 grp = (Integer) groupIds.toArray()[position];
+    	 super.onListItemClick(l,  v,  position, id);
     	 Log.d("string!!!", "the pos:"+position);
+    	 grp = (Integer) groupIds.toArray()[position];
     	 new JoinGroup().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/joinGroups.php"});
      }
      
@@ -96,7 +97,7 @@ public class OnSearchListFragment extends ListFragment{
                 try {
                    
                     // Defined URL  where to send data
-                    URL url = new URL(urls[0]);
+                    URL url = new URL(urls[0] + data);
                        
                    // Send POST data request
          

@@ -5,7 +5,7 @@ import java.util.List;
 public class GroupNotJoined implements Group{
 	
 	private String name = "";
-	private String groupId;
+	private int groupId;
 	private List<String>members;
 	
 	public GroupNotJoined(String name){
@@ -23,11 +23,11 @@ public class GroupNotJoined implements Group{
 		this.name = name;
 	}
 
-	public String getGroupId() {
+	public int getGroupId() {
 		return groupId;
 	}
 
-	public void setGroupId(String groupId) {
+	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
 }

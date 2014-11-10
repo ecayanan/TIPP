@@ -10,7 +10,7 @@ import com.tipp.user.adt.User;
 public class GroupJoined implements Group{
 	
 	private String name = "";
-	private String groupId;
+	private int groupId;
 	private List<User>members;
 	
 	public GroupJoined(String name){ 
@@ -34,11 +34,11 @@ public class GroupJoined implements Group{
 		this.members = members;
 	}
 
-	public String getGroupId() {
+	public int getGroupId() {
 		return groupId;
 	}
 
-	public void setGroupId(String groupId) {
+	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
 }
