@@ -22,29 +22,111 @@ import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnCloseListener;
+import android.widget.Toast;
+import android.widget.SearchView.OnQueryTextListener;
 
 import com.tipp.R;
      
      
 public class OnSearchListFragment extends ListFragment{
     
-	private String searchText = "";
+	private String searchStr = "";
 	ArrayAdapter<String> adapter;
     ArrayList <String> groupNames;
     ArrayList <Integer> groupIds;
 	private int grp;
+	private int currentUserId = 1;
 	
 	public void searchFilterText(String str){
-		searchText = str;
+		searchStr = str;
 		if(adapter != null)
-			adapter.getFilter().filter(searchText);
+		{
+			adapter.getFilter().filter(searchStr);
+
+		} 
 	}
-	
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view =  inflater.inflate(R.layout.fragment_on_search_list,container,false);
+		SearchView sv = (SearchView) view.findViewById(R.id.searchView1);
+	      sv.setOnQueryTextListener(new OnQueryTextListener(){
+	          @Override
+	          public boolean onQueryTextSubmit(String query) {
+	                	  searchFilterText(query);
+	                  return false;
+	          }
+	          
+	          @Override
+	          public boolean onQueryTextChange(String newText) {
+	        	  searchFilterText(newText);
+	                //  return true;
+	              return false;
+	          }
+
+	          
+	      });
+	      sv.setOnCloseListener(new OnCloseListener()
+	      {
+
+			@Override
+			public boolean onClose() {
+				// TODO Auto-generated method stub
+				View view = getView();
+				searchStr = "";
+				//createButton.setVisibility(View.INVISIBLE);
+				//Log.d("ONCLOSE", createButton.getVisibility() + "");
+				return false;
+			}
+			
+	    	  
+	      });
+	      
+			Button createButton = (Button) view.findViewById(R.id.createGroupButton);
+			createButton.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if(searchStr.equals(""))
+					{
+						Toast.makeText(getActivity(), "Need to type in a string",
+	                           Toast.LENGTH_LONG).show();
+					} else if(adapter.getCount() == 0 && !searchStr.equals(""))
+					{
+						View view = getView();
+						Button createButton = (Button) view.findViewById(R.id.createGroupButton);
+						//createButton.setVisibility(View.VISIBLE);
+				    	 Log.d("searchtext1" , searchStr);
+						createButton.setOnClickListener(new OnClickListener(){
+
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								Toast.makeText(getActivity(), "Listened Succesfully",
+				                           Toast.LENGTH_LONG).show();
+								new AddToGroup().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/add.php"});
+							}
+							
+						});
+					} 
+					
+				}
+				
+			});
+			
+	      return view;
+    }
      public void onActivityCreated(Bundle savedInstanceState) {
   
        //get bundle and get all groups array
@@ -53,6 +135,7 @@ public class OnSearchListFragment extends ListFragment{
        super.onActivityCreated(savedInstanceState);
        adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, groupNames);
        setListAdapter(adapter);
+
      }
 
      @Override
@@ -79,7 +162,6 @@ public class OnSearchListFragment extends ListFragment{
                 try{
                     // Set Request parameter
                             //searchtext = searchview.getQuery().toString();
-                            int currentUserId = 1;
                     data +="?" + URLEncoder.encode("groupid", "UTF-8") + "=" + grp + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId;
                          
                 } catch (UnsupportedEncodingException e) {
@@ -134,11 +216,78 @@ public class OnSearchListFragment extends ListFragment{
      
             protected void onPostExecute(String result) {
             }
-           
+       }          
+            private class AddToGroup extends AsyncTask<String,Integer,String> {
+                String data = "";
+                String Content = "";
      
-     
-        }          
-     
+                protected void onPreExecute() {
+                    // NOTE: You can call UI Element here.
+                      
+                    //Start Progress Dialog (Message)
+                    
+                      
+                    try{
+                        // Set Request parameter
+                                //searchtext = searchview.getQuery().toString();
+                        data +="?" + URLEncoder.encode("groupname", "UTF-8") + "=" + searchStr + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId;
+                        Log.d("DATA2", searchStr);      
+                    } catch (UnsupportedEncodingException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                      
+                }        
+                protected String doInBackground(String... urls) {
+                    JSONObject result = null;
+                    DefaultHttpClient client = new DefaultHttpClient();
+                    HttpGet httpGet = new HttpGet(urls[0] + data); // Don't do this
+                    Log.d("JSON Thing",data);
+                    //test.setText("before try");
+                    try {
+                        
+                        // Defined URL  where to send data
+                        URL url = new URL(urls[0] + data);
+                            
+                       // Send POST data request
+              
+                       URLConnection conn = url.openConnection();
+                       conn.setDoOutput(true);
+                       OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                       wr.write( data );
+                       wr.flush();
+                    
+                       // Get the server response
+                          
+                       BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                       StringBuilder sb = new StringBuilder();
+                       String line = null;
+                      
+                         // Read Server Response
+                         while((line = reader.readLine()) != null)
+                             {
+                                    // Append server response in string
+                                    sb.append(line + "");
+                             }
+                          
+                         // Append Server Response To Content String
+                        Content = sb.toString();
+                    } catch (Exception e) {
+                        
+                        StringWriter sw = new StringWriter();
+                        e.printStackTrace(new PrintWriter(sw));
+          
+                    } // Don't do this
+                    //return result;
+                    return Content;
+                }
+          
+                protected void onPostExecute(String result) {
+                }
+                
+          
+          
+            } 
      
     }
 

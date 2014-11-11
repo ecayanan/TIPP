@@ -96,7 +96,10 @@ public class LoginActivity extends FragmentActivity {
 	        } else if (state.isClosed()) {
 	            // If the session state is closed:
 	            // Show the login fragment
-	            showFragment(SPLASH, false);
+	            //showFragment(SPLASH, false);
+	        	killActivity();
+	        	Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
+	    		startActivity(intent);
 	        }
 	    }
 	}
@@ -117,7 +120,10 @@ public class LoginActivity extends FragmentActivity {
 	    } else {
 	        // otherwise present the splash screen
 	        // and ask the person to login.
-	        showFragment(SPLASH, false);
+	        //showFragment(SPLASH, false);
+        	killActivity();
+        	Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
+    		startActivity(intent);
 	    }
 	}
 	

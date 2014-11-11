@@ -24,23 +24,7 @@ public class OnSearchFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
     		Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_on_search, container, false);
-		SearchView sv = (SearchView) view.findViewById(R.id.searchView1);
-	      sv.setOnQueryTextListener(new OnQueryTextListener(){
-	          @Override
-	          public boolean onQueryTextSubmit(String query) {
-	                  if(searchFragment != null)
-	                	  searchFragment.searchFilterText(query);
-	                  return false;
-	          }
-	          @Override
-	          public boolean onQueryTextChange(String newText) {
-	          	if(searchFragment != null){
-	              searchFragment.searchFilterText(newText);
-	                //  return true;
-	          	}
-	              return false;
-	          }
-	      });
+
 	      
 		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         searchFragment = new OnSearchListFragment();
