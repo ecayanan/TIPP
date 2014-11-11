@@ -230,7 +230,7 @@ public class OnSearchListFragment extends ListFragment{
                     try{
                         // Set Request parameter
                                 //searchtext = searchview.getQuery().toString();
-                        data +="?" + URLEncoder.encode("groupname", "UTF-8") + "=" + searchStr + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId;
+                        data +="?" + URLEncoder.encode("groupname", "UTF-8") + "=" + URLEncoder.encode(searchStr, "UTF-8") + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId;
                         Log.d("DATA2", searchStr);      
                     } catch (UnsupportedEncodingException e) {
                         // TODO Auto-generated catch block
