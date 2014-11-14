@@ -24,13 +24,11 @@ public class OnSearchFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
     		Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_on_search, container, false);
-
 	      
 		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         searchFragment = new OnSearchListFragment();
         searchFragment.setArguments(this.getArguments());
         fragmentTransaction.add(R.id.search_list_container, searchFragment);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         return view;
     }
