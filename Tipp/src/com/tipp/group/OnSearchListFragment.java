@@ -61,6 +61,12 @@ public class OnSearchListFragment extends ListFragment{
         View view =  inflater.inflate(R.layout.fragment_on_search_list,container,false);
 		SearchView sv = (SearchView) view.findViewById(R.id.searchView1);
 		sv.setQueryHint("Search or Add groups");
+		
+		//automatically expand search view and place cursor inside
+		//must be set to true in xml file to resize back down
+		sv.setIconified(false);
+		
+		
 	      sv.setOnQueryTextListener(new OnQueryTextListener(){
 	          @Override
 	          public boolean onQueryTextSubmit(String query) {
@@ -144,6 +150,12 @@ public class OnSearchListFragment extends ListFragment{
     	 super.onListItemClick(l,  v,  position, id);
     	 Log.d("string!!!", "the pos:"+position);
     	 grp = (Integer) groupIds.toArray()[position];
+    	 
+    	 //get string at position
+    	 //use that string at remove
+    	 String remove_group = adapter.getItem(position);
+    	 adapter.remove(remove_group);
+    	 
     	 new JoinGroup().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/joinGroups.php"});
      }
      

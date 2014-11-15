@@ -28,9 +28,9 @@ public class CustomAdapter extends ArrayAdapter<Group>{
           convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_group, parent, false);
        }
        // Lookup view for data population
-       TextView groupName = (TextView) convertView.findViewById(R.id.groupName);
+       //TextView groupName = (TextView) convertView.findViewById(R.id.groupName);
        // Populate the data into the template view using the data object
-       groupName.setText(group.getName());
+       //groupName.setText(group.getName());
        // Return the completed view to render on screen
        return convertView;
    }

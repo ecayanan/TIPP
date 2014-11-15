@@ -21,7 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.tipp.R;
 import com.tipp.group.adt.GroupManager;
@@ -34,17 +34,22 @@ public class OriginFragment extends Fragment{
     		Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_origin, container, false);
 		new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php?userid=1"}); 
-		Button btnGroup = (Button) view.findViewById(R.id.btnGroup);
+		final ImageButton btnGroup = (ImageButton) view.findViewById(R.id.btnGroup);
+		final ImageButton btnSearch = (ImageButton) view.findViewById(R.id.btnSearch);
 		btnGroup.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				btnGroup.setImageResource(R.drawable.addgroupcurrent);
+				btnSearch.setImageResource(R.drawable.ssearch);
 				new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php?userid=1"});
 			}
 		});
-		Button btnSearch = (Button) view.findViewById(R.id.btnSearch);
 		btnSearch.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				btnSearch.setImageResource(R.drawable.ssearchcurrent);
+				btnGroup.setImageResource(R.drawable.addgroup);
+				
 				startOnSearchFragment(groupManager.getGroupNotJoinedBundle());
 			}
 		});

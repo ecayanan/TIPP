@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.tipp.R;
@@ -27,6 +28,20 @@ public class GroupFragment extends ListFragment{
 	private int grp;
 	private int currentUserId = 1;
 	
+	   
+	@Override
+	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                             Bundle savedInstanceState) {
+
+	        View view =  inflater.inflate(R.layout.fragment_group,container,false);
+	        
+	   
+	   return view;
+	   
+    }
+	
+	
+	
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
  
@@ -34,7 +49,7 @@ public class GroupFragment extends ListFragment{
 	  groupIds = getArguments().getIntegerArrayList("groupIds");
       groupNames = getArguments().getStringArrayList("groupMemberStringArray");
       super.onActivityCreated(savedInstanceState);
-      adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, groupNames);
+      adapter = new ArrayAdapter<String>(getActivity(),R.layout.group_view, R.id.gsearchtitle, groupNames);
       setListAdapter(adapter);
     }
     

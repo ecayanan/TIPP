@@ -13,13 +13,15 @@
                 android:id="@+id/gsearchtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#FFF"
+                android:ellipsize="end"
+                android:paddingBottom="13dp"
+                android:paddingLeft="7dp"
+                android:paddingTop="10dp"
                 android:singleLine="true"
                 android:text=""
-                android:textSize="35dp"
-                android:background="#4A6DB4"
-                android:textColor="#ececec"
-                android:ellipsize="end"
-                />
+                android:textColor="#26abd8"
+                android:textSize="23dp" />
      
              <ImageView
                  android:id="@+id/imageView1"
@@ -27,7 +29,7 @@
                  android:layout_height="30dp"
                  android:layout_alignParentRight="true"
                  android:layout_centerVertical="true"
-                 android:src="@drawable/plus" />
+                 android:src="@drawable/plusw" />
      
         </RelativeLayout>
      
