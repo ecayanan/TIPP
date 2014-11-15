@@ -34,11 +34,11 @@ public class GroupMemberFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
     		Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_group_member, container, false);
-		//groupId = getArguments().getInt("groupid");
+		groupId = getArguments().getInt("groupid");
 		//Log.d("groupID: ",""+groupId);
-		//currentUserId = getArguments().getInt("userId");
+		currentUserId = getArguments().getInt("userId");
 		//Log.d("userID: ",""+currentUserId);
-   	 	//new obtainReviews().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/obtainGroupInfo.php"});
+   	 	new obtainReviews().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/obtainGroupInfo.php"});
         return view;
     }
 	
@@ -102,7 +102,9 @@ public class GroupMemberFragment extends ListFragment {
 	        //Log.d("ONPOSTEXECUTE", "starting post execute");
 	        for(int i = 0; i < reviews.length(); i++)
 	        {
-	        	String reviewString = reviews.getString(i);
+	        	JSONObject obj = reviews.getJSONObject(i);
+	        	String reviewString = obj.getString("name");
+	        	int id = obj.getInt("id");
 	        	Log.d("Review String " + i + " ", reviewString);
 	        	memberList.add(reviewString);
 	        }

@@ -60,6 +60,7 @@ public class OnSearchListFragment extends ListFragment{
 
         View view =  inflater.inflate(R.layout.fragment_on_search_list,container,false);
 		SearchView sv = (SearchView) view.findViewById(R.id.searchView1);
+		sv.setQueryHint("Search or Add groups");
 	      sv.setOnQueryTextListener(new OnQueryTextListener(){
 	          @Override
 	          public boolean onQueryTextSubmit(String query) {

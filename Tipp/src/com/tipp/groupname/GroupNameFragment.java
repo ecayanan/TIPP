@@ -48,7 +48,7 @@ public class GroupNameFragment extends Fragment {
 	public void startMemberFragment(View v){
 		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         GroupMemberFragment gmf = new GroupMemberFragment();
-        //grf.setArguments(this.getArguments());
+        gmf.setArguments(this.getArguments());
         fragmentTransaction.replace(R.id.group_name_container, gmf);
         fragmentTransaction.commit();
 	}
