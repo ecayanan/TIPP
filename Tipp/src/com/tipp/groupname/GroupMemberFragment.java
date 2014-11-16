@@ -29,18 +29,19 @@ import android.widget.ListView;
 
 public class GroupMemberFragment extends ListFragment {
 	private int groupId;
-	private int currentUserId;
+	private String currentUserId = "";
 	private ArrayAdapter adapter;
 	private ArrayList<String> memberList = new ArrayList<String>();
-	private ArrayList<Integer> memberIDList = new ArrayList<Integer>();
+	private ArrayList<String> memberIDList = new ArrayList<String>();
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
     		Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_group_member, container, false);
+		currentUserId = getArguments().getString("user_ID");
 		groupId = getArguments().getInt("groupid");
 		//Log.d("groupID: ",""+groupId);
-		currentUserId = getArguments().getInt("userId");
+		//currentUserId = getArguments().getInt("userId");
 		//Log.d("userID: ",""+currentUserId);
    	 	new obtainReviews().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/obtainGroupInfo.php"});
         return view;
@@ -51,10 +52,10 @@ public class GroupMemberFragment extends ListFragment {
      	  super.onListItemClick(l,  v,  position, id);
      	  Log.d("CREATE", "ENTERED");
      	  Bundle bundle = new Bundle();
-     	  int memberId = (Integer) memberIDList.toArray()[position];
-     	  bundle.putInt("memberId",memberId ); //Who receives the message
+     	  String memberId = (String) memberIDList.toArray()[position];
+     	  bundle.putString("memberId",memberId ); //Who receives the message
      	  bundle.putInt("groupId", groupId); // The group that this review is a part of
-     	  bundle.putInt("userId", currentUserId); // The one sending the message
+     	  bundle.putString("user_ID", currentUserId); // The one sending the message
      	  CreateReviewFragment crf = new CreateReviewFragment();
      	  FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
      	  crf.setArguments(bundle);
@@ -125,7 +126,7 @@ public class GroupMemberFragment extends ListFragment {
 	        {
 	        	JSONObject obj = reviews.getJSONObject(i);
 	        	String reviewString = obj.getString("name");
-	        	int id = obj.getInt("id");
+	        	String id = obj.getString("id");
 	        	Log.d("Review String " + i + " ", reviewString);
 	        	memberList.add(reviewString);
 	        	memberIDList.add(id);
@@ -134,7 +135,7 @@ public class GroupMemberFragment extends ListFragment {
     	catch(Exception e){
     		
     	}
-        adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, memberList);
+        adapter = new ArrayAdapter<String>(getActivity(),R.layout.review_view, R.id.gsearchtitle, memberList);
         setListAdapter(adapter);
     }
     }

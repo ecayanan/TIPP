@@ -1,13 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:id="@+id/linearlayoutgroupmember" >
-    
-    <ListView
-		android:id="@android:id/list"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:dividerHeight="6dp"/>
-
+    android:orientation="vertical"
+    android:id="@+id/linearlayoutgroupreviews" >
+   
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:paddingLeft="4dp"
+            android:layout_marginRight="5dp"
+            android:divider="#b1689f"
+            android:dividerHeight="1dp"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbarThumbVertical="@drawable/svt"
+            android:scrollbarTrackVertical="@drawable/scb"
+            android:scrollbarSize="3dip"
+            android:fastScrollEnabled="true"
+ 
+           />
+ 
 </LinearLayout>

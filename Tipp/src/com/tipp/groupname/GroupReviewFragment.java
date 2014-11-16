@@ -32,7 +32,7 @@ import com.tipp.group.adt.GroupNotJoined;
 
 public class GroupReviewFragment extends ListFragment{
 	private int groupId;
-	private int currentUserId;
+	private String currentUserId;
 	private ArrayAdapter adapter;
 	private ArrayList<String> reviewList = new ArrayList<String>();
 	
@@ -42,7 +42,8 @@ public class GroupReviewFragment extends ListFragment{
 		View view = inflater.inflate(R.layout.fragment_group_review, container, false);
 		groupId = getArguments().getInt("groupid");
 		Log.d("groupID: ",""+groupId);
-		currentUserId = getArguments().getInt("userId");
+		currentUserId = getArguments().getString("user_ID");
+		//currentUserId = getArguments().getInt("userId");
 		Log.d("userID: ",""+currentUserId);
    	 	new obtainReviews().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/obtainGroupInfo.php"});
         return view;
@@ -116,7 +117,7 @@ public class GroupReviewFragment extends ListFragment{
     	catch(Exception e){
     		
     	}
-        adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, reviewList);
+        adapter = new ArrayAdapter<String>(getActivity(),R.layout.review_view, R.id.gsearchtitle, reviewList);
         setListAdapter(adapter);
     }
 }

@@ -12,10 +12,12 @@ public class OriginActivity extends Activity{
 	  @Override
 	  protected void onCreate(Bundle savedInstanceState) {
 	      super.onCreate(savedInstanceState);
+	      Bundle bundle = new Bundle();
+	      bundle = getIntent().getExtras();
 	      setContentView(R.layout.activity_origin);
 		  FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
           OriginFragment of = new OriginFragment();
-          of.setArguments(savedInstanceState);
+          of.setArguments(bundle);
           fragmentTransaction.add(R.id.main_container, of);
           fragmentTransaction.commit();
 	  }

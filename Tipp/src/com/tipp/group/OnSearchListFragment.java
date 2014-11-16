@@ -44,7 +44,7 @@ public class OnSearchListFragment extends ListFragment{
     ArrayList <String> groupNames;
     ArrayList <Integer> groupIds;
 	private int grp;
-	private int currentUserId = 1;
+	private String currentUserId = "";
 	
 	public void searchFilterText(String str){
 		searchStr = str;
@@ -59,7 +59,7 @@ public class OnSearchListFragment extends ListFragment{
                              Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.fragment_on_search_list,container,false);
-		SearchView sv = (SearchView) view.findViewById(R.id.searchView1);
+		final SearchView sv = (SearchView) view.findViewById(R.id.searchView1);
 		sv.setQueryHint("Search or Add groups");
 		
 		//automatically expand search view and place cursor inside
@@ -137,6 +137,8 @@ public class OnSearchListFragment extends ListFragment{
      public void onActivityCreated(Bundle savedInstanceState) {
   
        //get bundle and get all groups array
+       currentUserId = getArguments().getString("user_ID");
+       //Log.d("onsearchlistfragment userid = ",currentUserId);
 	   groupIds = getArguments().getIntegerArrayList("groupIds");
        groupNames = getArguments().getStringArrayList("groupStringArray");
        super.onActivityCreated(savedInstanceState);

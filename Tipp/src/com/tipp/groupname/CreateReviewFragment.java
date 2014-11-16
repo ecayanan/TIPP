@@ -34,9 +34,9 @@ import android.widget.EditText;
 import com.tipp.R;
 
 public class CreateReviewFragment extends ListFragment {
-	private int currentUserId;
+	private String currentUserId;
 	private int groupid;
-	private int memberid;
+	private String memberid;
 	private String review = "";
 	private ArrayAdapter adapter;
 	private ArrayList<String>reviewList = new ArrayList<String>();;
@@ -45,9 +45,10 @@ public class CreateReviewFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
     		Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_create_review, container, false);
-		currentUserId = getArguments().getInt("userId");
+		currentUserId = getArguments().getString("user_ID");
+		//currentUserId = getArguments().getInt("userId");
 		groupid = getArguments().getInt("groupId");
-		memberid = getArguments().getInt("memberId");
+		memberid = getArguments().getString("memberId");
 		//adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, reviewList);
 		final EditText text = (EditText) view.findViewById(R.id.message);
 		Button btnSend = (Button) view.findViewById(R.id.btnSendMessage);
@@ -56,9 +57,10 @@ public class CreateReviewFragment extends ListFragment {
 			public void onClick(View v) {
 				review = text.getText().toString();
 				if(review != ""){
+					text.setText("");
 					Log.d("message is ", review);
 					reviewList.add(review);
-					adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, reviewList);
+					adapter = new ArrayAdapter<String>(getActivity(),R.layout.review_view, R.id.gsearchtitle, reviewList);
 					setListAdapter(adapter);
 					new SendReview().execute(new String[]{"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/createReview.php"});
 				}
@@ -83,7 +85,8 @@ public class CreateReviewFragment extends ListFragment {
 	            // Set Request parameter
 	                    //searchtext = searchview.getQuery().toString();
 	            data +="?" + URLEncoder.encode("groupid", "UTF-8") + "=" + groupid + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId + "&" + URLEncoder.encode("receiver","UTF-8") + "=" + memberid + "&" + URLEncoder.encode("content","UTF-8") + "=" + URLEncoder.encode(review,"UTF-8");
-	                 
+	            Log.d("CRF user_ID = ", currentUserId);
+	            Log.d("CRF member_ID = ",""+memberid);
 	        } catch (UnsupportedEncodingException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
@@ -206,7 +209,7 @@ public class CreateReviewFragment extends ListFragment {
 	    	catch(Exception e){
 	    		
 	    	}
-	        adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, reviewList);
+	        adapter = new ArrayAdapter<String>(getActivity(),R.layout.review_view, R.id.gsearchtitle, reviewList);
 	        setListAdapter(adapter);
 	    }
 	}	

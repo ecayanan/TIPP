@@ -26,7 +26,7 @@ public class GroupFragment extends ListFragment{
     ArrayList <String> groupNames;
     ArrayList <Integer> groupIds;
 	private int grp;
-	private int currentUserId = 1;
+	private String currentUserId = "";
 	
 	   
 	@Override
@@ -46,6 +46,8 @@ public class GroupFragment extends ListFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
  
       //get bundle and get all groups array
+      currentUserId = getArguments().getString("user_ID");
+      //Log.d("groupFRagment userid = ", currentUserId);
 	  groupIds = getArguments().getIntegerArrayList("groupIds");
       groupNames = getArguments().getStringArrayList("groupMemberStringArray");
       super.onActivityCreated(savedInstanceState);
@@ -61,7 +63,7 @@ public class GroupFragment extends ListFragment{
       //gnf.setArguments(this.getArguments());
       Bundle bundle = new Bundle();
       bundle.putInt("groupid", (Integer)groupIds.toArray()[position]);
-      bundle.putInt("userId", currentUserId);
+      bundle.putString("user_ID", currentUserId);
       gnf.setArguments(bundle);
       fragmentTransaction.replace(R.id.main_container, gnf);
       fragmentTransaction.addToBackStack(null);

@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.tipp.R;
 
@@ -17,19 +17,27 @@ public class GroupNameFragment extends Fragment {
     		Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_group_name, container, false);
 		startReviewFragment(view);
-		Button btnReview = (Button)view.findViewById(R.id.btnReviews);
+		final ImageButton btnReview = (ImageButton)view.findViewById(R.id.btnReviews);
+		final ImageButton btnMember = (ImageButton)view.findViewById(R.id.btnMembers);
+		
 		btnReview.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
+				
+				btnReview.setImageResource(R.drawable.reviewcurrent);
+				btnMember.setImageResource(R.drawable.members);
 				startReviewFragment(v);
 			}
 			
 		});
-		Button btnMember = (Button)view.findViewById(R.id.btnMembers);
+		
 		btnMember.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				
+				btnReview.setImageResource(R.drawable.review);
+				btnMember.setImageResource(R.drawable.memberscurrent);
 				startMemberFragment(v);
 			}
 			

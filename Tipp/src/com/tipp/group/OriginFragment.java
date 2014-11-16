@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -27,13 +29,17 @@ import com.tipp.R;
 import com.tipp.group.adt.GroupManager;
 
 public class OriginFragment extends Fragment{
-    private GroupManager groupManager; 
+    private GroupManager groupManager;
+    private String user_ID;
+    
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
     		Bundle savedInstanceState) {
+		user_ID = getArguments().getString("SESSION_ID");
+		Log.d("user_id",user_ID);
 		View view = inflater.inflate(R.layout.fragment_origin, container, false);
-		new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php?userid=1"}); 
+		new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"}); 
 		final ImageButton btnGroup = (ImageButton) view.findViewById(R.id.btnGroup);
 		final ImageButton btnSearch = (ImageButton) view.findViewById(R.id.btnSearch);
 		btnGroup.setOnClickListener(new OnClickListener(){
@@ -41,7 +47,7 @@ public class OriginFragment extends Fragment{
 			public void onClick(View v) {
 				btnGroup.setImageResource(R.drawable.addgroupcurrent);
 				btnSearch.setImageResource(R.drawable.ssearch);
-				new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php?userid=1"});
+				new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"});
 			}
 		});
 		btnSearch.setOnClickListener(new OnClickListener(){
@@ -58,10 +64,28 @@ public class OriginFragment extends Fragment{
 	}
 	
     private class DownloadJSONTask extends AsyncTask<String,Integer,JSONObject> { 
+	    String data = "";
+    	protected void onPreExecute() {
+	        // NOTE: You can call UI Element here.
+	         
+	        //Start Progress Dialog (Message)
+	       
+	         
+	        try{
+	            // Set Request parameter
+	                    //searchtext = searchview.getQuery().toString();
+	            data +="?" + URLEncoder.encode("userid","UTF-8") + "=" + user_ID ;
+	                 
+	        } catch (UnsupportedEncodingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	         
+	    } 	
       protected JSONObject doInBackground(String... urls) {
           JSONObject result = null;
           DefaultHttpClient client = new DefaultHttpClient();
-          HttpGet httpGet = new HttpGet(urls[0]);
+          HttpGet httpGet = new HttpGet(urls[0] + data);
           Log.d("JSON Thing","lets get started");
           try {
               HttpResponse execute_response = client.execute(httpGet);
@@ -90,7 +114,8 @@ public class OriginFragment extends Fragment{
 
       protected void onPostExecute(JSONObject result) {
           try {
-          	groupManager = new GroupManager(result);
+          	  groupManager = new GroupManager(result);
+          	  groupManager.setUserID(user_ID);
               startGroupFragment(groupManager.getGroupJoinedBundle());
           } catch (Exception e) {
               Log.d("EXCEPTION", e.getMessage());

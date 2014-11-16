@@ -13,10 +13,12 @@ public class GroupManager {
 
 	private List<GroupJoined> gj;
 	private List<GroupNotJoined> gnj;
+	private String user_ID;
 	
 	public GroupManager(JSONObject obj){
 		gj = new ArrayList<GroupJoined>();
 		gnj = new ArrayList<GroupNotJoined>();
+		user_ID = "";
 
 		
 		try {
@@ -77,12 +79,19 @@ public class GroupManager {
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("groupMemberStringArray", getGroupJoinedName());
 		bundle.putIntegerArrayList("groupIds", getGroupJoinedId());
+		bundle.putString("user_ID", user_ID);
+		//Log.d("groupmanager userid=", user_ID);
 		return bundle;
 	}
 	public Bundle getGroupNotJoinedBundle(){
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("groupStringArray", getGroupNotJoinedName());
 		bundle.putIntegerArrayList("groupIds", getGroupNotJoinedId());
+		bundle.putString("user_ID", user_ID);
 		return bundle;
+	}
+
+	public void setUserID(String user_ID) {
+		this.user_ID = user_ID;
 	}
 }
