@@ -103,7 +103,7 @@ public class GroupMemberFragment extends ListFragment {
                 while ((s = buffer.readLine()) != null) {
                     response += s;
                 }
-                //Log.d("MY_APP",response);
+                Log.d("MY_APP",response);
                 result = new JSONObject(response);
                     } else {
                             
