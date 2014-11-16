@@ -15,6 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.tipp.R;
+
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,12 +25,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class GroupMemberFragment extends ListFragment {
 	private int groupId;
 	private int currentUserId;
 	private ArrayAdapter adapter;
 	private ArrayList<String> memberList = new ArrayList<String>();
+	private ArrayList<Integer> memberIDList = new ArrayList<Integer>();
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +44,23 @@ public class GroupMemberFragment extends ListFragment {
 		//Log.d("userID: ",""+currentUserId);
    	 	new obtainReviews().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/obtainGroupInfo.php"});
         return view;
+    }
+	
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+     	  super.onListItemClick(l,  v,  position, id);
+     	  Log.d("CREATE", "ENTERED");
+     	  Bundle bundle = new Bundle();
+     	  int memberId = (Integer) memberIDList.toArray()[position];
+     	  bundle.putInt("memberId",memberId ); //Who receives the message
+     	  bundle.putInt("groupId", groupId); // The group that this review is a part of
+     	  bundle.putInt("userId", currentUserId); // The one sending the message
+     	  CreateReviewFragment crf = new CreateReviewFragment();
+     	  FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+     	  crf.setArguments(bundle);
+     	  fragmentTransaction.replace(R.id.main_container, crf);
+     	  fragmentTransaction.addToBackStack(null);
+     	  fragmentTransaction.commit();
     }
 	
 	
@@ -107,6 +128,7 @@ public class GroupMemberFragment extends ListFragment {
 	        	int id = obj.getInt("id");
 	        	Log.d("Review String " + i + " ", reviewString);
 	        	memberList.add(reviewString);
+	        	memberIDList.add(id);
 	        }
     	}
     	catch(Exception e){
