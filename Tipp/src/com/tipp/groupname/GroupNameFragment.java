@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.tipp.R;
@@ -20,7 +21,18 @@ public class GroupNameFragment extends Fragment {
 		startReviewFragment(view);
 		final ImageButton btnReview = (ImageButton)view.findViewById(R.id.btnReviews);
 		final ImageButton btnMember = (ImageButton)view.findViewById(R.id.btnMembers);
-		
+		final Button btnWrite = (Button)view.findViewById(R.id.btnWrite);
+		btnWrite.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				
+				//btnReview.setImageResource(R.drawable.reviewcurrent);
+				//btnMember.setImageResource(R.drawable.members);
+				startWriteFragment(v);
+			}
+			
+		});
 		btnReview.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -46,6 +58,14 @@ public class GroupNameFragment extends Fragment {
         return view;
     }
 	
+	protected void startWriteFragment(View v) {
+		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        GroupWriteReviewFragment grf = new GroupWriteReviewFragment();
+        grf.setArguments(this.getArguments());
+        fragmentTransaction.replace(R.id.main_container, grf);
+        fragmentTransaction.commit();
+	}
+
 	public void startReviewFragment(View v){
 		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         GroupReviewFragment grf = new GroupReviewFragment();
