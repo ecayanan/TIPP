@@ -1,17 +1,12 @@
 package com.tipp.group;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MenuItem.OnActionExpandListener;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 
 import com.tipp.R;
 

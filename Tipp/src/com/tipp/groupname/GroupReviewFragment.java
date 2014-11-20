@@ -16,9 +16,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.tipp.R;
-import com.tipp.group.adt.GroupNotJoined;
 
 
 

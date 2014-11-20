@@ -30,7 +30,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -38,7 +37,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
-import com.tipp.group.OriginActivity;
+import com.tipp.group.OriginFragment;
 
 
 public class LoginActivity extends FragmentActivity {
@@ -51,12 +50,16 @@ public class LoginActivity extends FragmentActivity {
 	private String user_ID;
 	private String profileName;
 	private boolean isResumed = false;
-	private Intent intent;
+	private FragmentManager fm = getSupportFragmentManager();
+    private FragmentTransaction transaction = fm.beginTransaction();
+    private OriginFragment of;
+    private Bundle bundle = new Bundle();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    try {
+	   
 	        PackageInfo info = getPackageManager().getPackageInfo(
 	                "com.tipp", 
 	                PackageManager.GET_SIGNATURES);
@@ -127,15 +130,19 @@ public class LoginActivity extends FragmentActivity {
 	            manager.popBackStack();
 	        }
 	        if (state.isOpened()) {
+	        	
 	            // If the session state is open:
 	            // Show the authenticated fragment
 	            
 	        	//showFragment(SELECTION, false);
 	        	
 	        	 //Go to origin activity if state is opened
-	        	killActivity();
-	        	Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
-	    		startActivity(intent); 
+	        	//killActivity();
+	        	//onResumeFragments();
+	        	//transaction.commit();
+	    
+	        	//Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
+	    		//startActivity(intent); 
 	        	
 	        	//showFragment(SELECTION, false);
 	        } else if (state.isClosed()) {
@@ -173,29 +180,31 @@ public class LoginActivity extends FragmentActivity {
 	                        //userNameView.setText(user.getName());
 	                        Log.d("user_ID",user_ID);
 	                        Log.d("profileName", profileName);
-	            	   	 	new AddUser().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/addUser.php"});
-
+	            	   	 	new AddUser().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/addUser.php"});		
+	            	   	 	try{
+	            	   	 		if(of == null){
+		            	   	 		of = new OriginFragment();
+			            	   	 	setContentView(R.layout.activity_origin);
+			        		    	bundle.putString("SESSION_ID", user_ID);
+			        		    	of.setArguments(bundle);
+			        		    	transaction.replace(R.id.main_container, of);
+	            	   	 		}
+		        		        transaction.commit();
+		         	    	}
+		         	    	catch(Exception e){	
+		         	    	}
 	                    }   
 	                }   
 	            }   
 	        }); 
-	        Request.executeBatchAsync(request);	  
-	        killActivity();
-	    	//intent = new Intent(getApplicationContext(), OriginActivity.class);
-	    	//intent.putExtra("SESSION_ID", user_ID);
-			//startActivity(intent);
-			
+	        Request.executeBatchAsync(request);
+	        
+	        //killActivity();		
 	    } else {
 	        // otherwise present the splash screen
 	        // and ask the person to login.
 	    	
 	        showFragment(SPLASH, false);
-        	
-        	
-        	/* Go straight to origin activity
-        	killActivity();
-        	Intent intent = new Intent(getApplicationContext(), OriginActivity.class);
-    		startActivity(intent);*/
 	    }
 	}
 	
@@ -307,9 +316,10 @@ public class LoginActivity extends FragmentActivity {
 	    }
 	
 	    protected void onPostExecute(String result) {
-	    	intent = new Intent(getApplicationContext(), OriginActivity.class);
-	    	intent.putExtra("SESSION_ID", user_ID);
-	    	startActivity(intent);
+	 
 	    }
+	    
 	}	
+
+    
 }

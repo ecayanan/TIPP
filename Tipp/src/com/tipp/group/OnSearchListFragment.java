@@ -1,9 +1,6 @@
-	
-
-    package com.tipp.group;
+package com.tipp.group;
      
-     
-    import java.io.BufferedReader;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -18,9 +15,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +28,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
-import android.widget.Toast;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.Toast;
 
 import com.tipp.R;
      
