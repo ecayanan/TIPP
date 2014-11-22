@@ -22,6 +22,7 @@ public class GroupFragment extends ListFragment{
     ArrayList <Integer> groupIds;
 	private int grp;
 	private String currentUserId = "";
+	public static View groupView;
 	
 	   
 	@Override
@@ -57,6 +58,7 @@ public class GroupFragment extends ListFragment{
       GroupNameFragment gnf = new GroupNameFragment();
       //gnf.setArguments(this.getArguments());
       Bundle bundle = new Bundle();
+      bundle.putString("group_name",  groupNames.toArray()[position].toString());
       bundle.putInt("groupid", (Integer)groupIds.toArray()[position]);
       bundle.putString("user_ID", currentUserId);
       gnf.setArguments(bundle);

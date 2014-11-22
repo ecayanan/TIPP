@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tipp.R;
 
@@ -46,7 +47,13 @@ public class GroupMemberFragment extends ListFragment {
 		//currentUserId = getArguments().getInt("userId");
 		//Log.d("userID: ",""+currentUserId);
    	 	new obtainReviews().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/obtainGroupInfo.php"});
-        return view;
+        
+   	 	View header = GroupNameFragment.change_header_View;
+   	 	TextView t = (TextView) header.findViewById(R.id.textView1);
+		String currentGroupName = getArguments().getString("group_name");
+		t.setText(currentGroupName);
+   	 	
+		return view;
     }
 	
     @Override
