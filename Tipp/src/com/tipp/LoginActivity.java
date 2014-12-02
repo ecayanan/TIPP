@@ -12,9 +12,12 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -30,8 +33,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 
+import com.facebook.FacebookRequestError;
+import com.facebook.HttpMethod;
 import com.facebook.Request;
+import com.facebook.RequestAsyncTask;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -54,6 +61,11 @@ public class LoginActivity extends FragmentActivity {
     private FragmentTransaction transaction = fm.beginTransaction();
     private OriginFragment of;
     private Bundle bundle = new Bundle();
+    
+    private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
+    private static final String PENDING_PUBLISH_KEY = "pendingPublishReauthorization";
+    private static boolean pendingPublishReauthorization = false;
+ 
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -186,6 +198,7 @@ public class LoginActivity extends FragmentActivity {
 		            	   	 		of = new OriginFragment();
 			            	   	 	setContentView(R.layout.activity_origin);
 			        		    	bundle.putString("SESSION_ID", user_ID);
+			        		    	bundle.putString("USER_NAME", profileName);
 			        		    	of.setArguments(bundle);
 			        		    	transaction.replace(R.id.main_container, of);
 	            	   	 		}
@@ -320,6 +333,65 @@ public class LoginActivity extends FragmentActivity {
 	    }
 	    
 	}	
-
+    public void facebookClicks(View v){
+        publishStory();
+    }
+ 
+    public void publishStory() {
+            Session session = Session.getActiveSession();
+     
+            if (session != null){
+     
+                 
+                List<String> permissions = session.getPermissions();
+               
+                    pendingPublishReauthorization = true;
+                    Session.NewPermissionsRequest newPermissionsRequest = new Session
+                            .NewPermissionsRequest(this, PERMISSIONS);
+                session.requestNewPublishPermissions(newPermissionsRequest);
+                   
+     
+                Bundle postParams = new Bundle();
+                postParams.putString("name", "Facebook SDK for Android");
+                postParams.putString("caption", "Build great social apps and get more installs.");
+                postParams.putString("description", "The Facebook SDK for Android makes it easier and faster to develop Facebook integrated Android apps.");
+                postParams.putString("link", "https://developers.facebook.com/android");
+                postParams.putString("picture", "https://raw.github.com/fbsamples/ios-3.x-howtos/master/Images/iossdk_logo.png");
+     
+                Request.Callback callback= new Request.Callback() {
+                    public void onCompleted(Response response) {
+                        JSONObject graphResponse = response
+                                                   .getGraphObject()
+                                                   .getInnerJSONObject();
+                        String postId = null;
+                        try {
+                            postId = graphResponse.getString("id");
+                        } catch (JSONException e) {
+                            Log.i(TAG,
+                                "JSON error "+ e.getMessage());
+                        }
+                        FacebookRequestError error = response.getError();
+                        /*if (error != null) {
+                            Toast.makeText(getActivity()
+                                 .getApplicationContext(),
+                                 error.getErrorMessage(),
+                                 Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity()
+                                     .getApplicationContext(),
+                                     postId,
+                                     Toast.LENGTH_LONG).show();
+                        }*/
+                    }
+                };
+     
+                Request request = new Request(session, "me/feed", postParams,
+                                      HttpMethod.POST, callback);
+     
+                RequestAsyncTask task = new RequestAsyncTask(request);
+                task.execute();
+            }
+     
+        }
     
 }

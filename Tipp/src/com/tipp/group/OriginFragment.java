@@ -16,17 +16,20 @@ import org.json.JSONObject;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.tipp.R;
 import com.tipp.group.adt.GroupManager;
+import com.tipp.user.adt.UserProfileFragment;
 
 public class OriginFragment extends Fragment{
     private GroupManager groupManager;
@@ -42,9 +45,12 @@ public class OriginFragment extends Fragment{
 		new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"}); 
 		final ImageButton btnGroup = (ImageButton) view.findViewById(R.id.btnGroup);
 		final ImageButton btnSearch = (ImageButton) view.findViewById(R.id.btnSearch);
+		final ImageButton btnProfile = (ImageButton) view.findViewById(R.id.btnProfile);
 		btnGroup.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+			    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 				btnGroup.setImageResource(R.drawable.addgroupcurrent);
 				btnSearch.setImageResource(R.drawable.ssearch);
 				new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"});
@@ -57,6 +63,20 @@ public class OriginFragment extends Fragment{
 				btnGroup.setImageResource(R.drawable.addgroup);
 				
 				startOnSearchFragment(groupManager.getGroupNotJoinedBundle());
+			}
+		});
+		btnProfile.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				  final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+			      imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+			      FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+			      UserProfileFragment userProfileFragment = new UserProfileFragment();
+			      Bundle bundle = groupManager.getGroupJoinedBundle();
+			      bundle.putString("user_Name", getArguments().getString("USER_NAME"));
+			      userProfileFragment.setArguments(bundle);
+			      fragmentTransaction.replace(R.id.origin_container, userProfileFragment);
+			      fragmentTransaction.commit();
 			}
 		});
 		

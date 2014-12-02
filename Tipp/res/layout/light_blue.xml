@@ -27,9 +27,12 @@
                  android:id="@+id/imageView1"
                  android:layout_width="50dp"
                  android:layout_height="30dp"
+                 android:padding='5dp'
                  android:layout_alignParentRight="true"
                  android:layout_centerVertical="true"
-                 android:src="@drawable/plusw" />
+                 android:height="1dp"
+                 android:src="@drawable/plus2"
+                 android:width="1dp" />
      
         </RelativeLayout>
      

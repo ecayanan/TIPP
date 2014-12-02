@@ -19,17 +19,23 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.tipp.R;
 
@@ -37,7 +43,9 @@ public class CreateReviewFragment extends ListFragment {
 	private String currentUserId;
 	private int groupid;
 	private String memberid;
+	private String memberName;
 	private String review = "";
+	private Float ratingScore;
 	private ArrayAdapter adapter;
 	private ArrayList<String>reviewList = new ArrayList<String>();;
 
@@ -46,24 +54,63 @@ public class CreateReviewFragment extends ListFragment {
     		Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_create_review, container, false);
 		currentUserId = getArguments().getString("user_ID");
-		//currentUserId = getArguments().getInt("userId");
-		groupid = getArguments().getInt("groupId");
+		memberName = getArguments().getString("user_name");
+		groupid = getArguments().getInt("groupId");	
 		memberid = getArguments().getString("memberId");
-		//adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, reviewList);
+		TextView textName = (TextView) view.findViewById(R.id.textMemberName);
+		textName.setText(memberName);
+		final TextView textCount = (TextView) view.findViewById(R.id.textCount);
 		final EditText text = (EditText) view.findViewById(R.id.message);
+		final RatingBar rating = (RatingBar) view.findViewById(R.id.ratingBar1);
+		rating.setRating(0);
+		text.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				textCount.setText(""+(200-text.getText().toString().length()));
+				
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		Button btnSend = (Button) view.findViewById(R.id.btnSendMessage);
 		btnSend.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				review = text.getText().toString();
 				if(review != ""){
+					rating.setRating(0);
 					text.setText("");
 					Log.d("message is ", review);
 					reviewList.add(review);
 					adapter = new ArrayAdapter<String>(getActivity(),R.layout.review_view, R.id.gsearchtitle, reviewList);
+					ratingScore =  rating.getRating();
 					setListAdapter(adapter);
+					
 					new SendReview().execute(new String[]{"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/createReview.php"});
 				}
+			}
+		});
+		Button btnCancel = (Button) view.findViewById(R.id.btnCancelMessage);
+		btnCancel.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+			    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+				getActivity().getSupportFragmentManager().popBackStack();
 			}
 		});
 		new obtainReviews().execute(new String[]{"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/oldReviews.php"});
@@ -84,7 +131,7 @@ public class CreateReviewFragment extends ListFragment {
 	        try{
 	            // Set Request parameter
 	                    //searchtext = searchview.getQuery().toString();
-	            data +="?" + URLEncoder.encode("groupid", "UTF-8") + "=" + groupid + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId + "&" + URLEncoder.encode("receiver","UTF-8") + "=" + memberid + "&" + URLEncoder.encode("content","UTF-8") + "=" + URLEncoder.encode(review,"UTF-8");
+	            data +="?" + URLEncoder.encode("groupid", "UTF-8") + "=" + groupid + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId + "&" + URLEncoder.encode("receiver","UTF-8") + "=" + memberid + "&" + URLEncoder.encode("content","UTF-8") + "=" + URLEncoder.encode(review,"UTF-8") + "&" + URLEncoder.encode("rating","UTF-8") + "=" + URLEncoder.encode(ratingScore + "", "UTF-8");
 	            Log.d("CRF user_ID = ", currentUserId);
 	            Log.d("CRF member_ID = ",""+memberid);
 	        } catch (UnsupportedEncodingException e) {
@@ -102,6 +149,7 @@ public class CreateReviewFragment extends ListFragment {
 	        try {
 	           
 	            // Defined URL  where to send data
+		        Log.d("URL", urls[0]+data);
 	            URL url = new URL(urls[0] + data);
 	               
 	           // Send POST data request
@@ -166,6 +214,7 @@ public class CreateReviewFragment extends ListFragment {
 	    protected JSONArray doInBackground(String... urls) {
 	        JSONArray result = null;
 	        DefaultHttpClient client = new DefaultHttpClient();
+
 	        HttpGet httpGet = new HttpGet(urls[0]+data);
 	        Log.d("JSON Thing","lets get started");
 	        try {

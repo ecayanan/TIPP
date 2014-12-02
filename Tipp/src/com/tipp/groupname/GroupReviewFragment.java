@@ -123,7 +123,7 @@ public class GroupReviewFragment extends ListFragment{
     	catch(Exception e){
     		
     	}
-        adapter = new ArrayAdapter<String>(getActivity(),R.layout.review_view, R.id.gsearchtitle, reviewList);
+        adapter = new ArrayAdapter<String>(getActivity(),R.layout.review, R.id.gsearchtitle, reviewList);
         setListAdapter(adapter);
     }
 }
