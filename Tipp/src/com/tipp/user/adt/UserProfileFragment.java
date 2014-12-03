@@ -4,6 +4,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import com.tipp.R;
+import com.facebook.Session; 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,11 +20,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.LoginButton;
-import com.tipp.R;
 
 
 public class UserProfileFragment extends ListFragment {
@@ -53,6 +54,28 @@ public class UserProfileFragment extends ListFragment {
 		LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
 		authButton.setFragment(this);
 		
+		View shareButton = view.findViewById(R.id.button_share);
+        
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	if (FacebookDialog.canPresentShareDialog(getActivity(), FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
+                    FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
+                            .setName("Check out Tipp!")
+                            .setLink("www.tipp.com") //addlink to YOUTUBE VIDEO
+                            .setDescription("This app is changing my life!")
+                            .setPicture("https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/15458_1402187463405576_1052654193964303576_n.jpg?oh=ec7c9a4d9e41c7f77ac8e90a204eddd9&oe=551883DB&__gda__=1427161689_6fa2e07236bad814fe8bad4e5f3cf13a")
+                            //.setPicture("http://lh3.googleusercontent.com/-P4JBVTv_kSI/AAAAAAAAAAI/AAAAAAAAAAs/bZptjIhkWu4/s265-c-k-no/photo.jpg")
+                            .build();
+                    uiHelper.trackPendingDialogCall(shareDialog.present());
+ 
+                } 
+//                else {
+//                    Log.d(TAG_LOG, "Success!");
+//                }
+            }
+        });
+		
 		return view;
 	}
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -65,9 +88,10 @@ public class UserProfileFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new ArrayAdapter<String>(getActivity(),R.layout.group_view, R.id.gsearchtitle, groupNames);
         setListAdapter(adapter);
+        // Facebook Log out & Share
         uiHelper = new UiLifecycleHelper(getActivity(), callback);
         uiHelper.onCreate(savedInstanceState);
-      }	
+	}
 
     private class GetProfilePicture extends AsyncTask<String,Integer,Bitmap> { 
     	URL imageURL;
@@ -125,6 +149,20 @@ public class UserProfileFragment extends ListFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         uiHelper.onActivityResult(requestCode, resultCode, data);
+        
+        //facebook share start
+        uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
+            @Override
+            public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
+                Log.e("Activity", String.format("Error: %s", error.toString()));
+            }
+
+            @Override
+            public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
+                Log.i("Activity", "Success!");
+            }
+        });
+        //facebook share end
     }
 
     @Override
