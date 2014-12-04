@@ -92,7 +92,7 @@ public class CreateReviewFragment extends ListFragment {
 			public void onClick(View v) {
 				review = text.getText().toString();
 				if(review != ""){
-					rating.setRating(0);
+					
 					text.setText("");
 					Log.d("message is ", review);
 					reviewList.add(review);
@@ -101,6 +101,7 @@ public class CreateReviewFragment extends ListFragment {
 					setListAdapter(adapter);
 					
 					new SendReview().execute(new String[]{"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/createReview.php"});
+					rating.setRating(0);
 				}
 			}
 		});

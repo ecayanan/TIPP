@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.tipp.R;
+import com.tipp.adapters.ReviewsAdapter;
 
 
 
@@ -35,6 +36,8 @@ public class GroupReviewFragment extends ListFragment{
 	private String currentUserId;
 	private ArrayAdapter adapter;
 	private ArrayList<String> reviewList = new ArrayList<String>();
+	private ArrayList<Reviews> reviewsList;
+	private ReviewsAdapter reviewAdapter;
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,7 +98,7 @@ public class GroupReviewFragment extends ListFragment{
                 while ((s = buffer.readLine()) != null) {
                     response += s;
                 }
-                //Log.d("MY_APP",response);
+                Log.d("REVIEW_RESPONSE",response);
                 result = new JSONObject(response);
                     } else {
                             
@@ -111,20 +114,29 @@ public class GroupReviewFragment extends ListFragment{
     protected void onPostExecute(JSONObject result) {
     	try{
 	        JSONArray reviews = result.getJSONArray("yourReviews");
-		       
+		    reviewsList = new ArrayList<Reviews>();   
 	        //Log.d("ONPOSTEXECUTE", "starting post execute");
 	        for(int i = 0; i < reviews.length(); i++)
 	        {
-	        	String reviewString = reviews.getString(i);
-	        	Log.d("Review String " + i + " ", reviewString);
-	        	reviewList.add(reviewString);
+	        	JSONObject reviewString = reviews.getJSONObject(i);
+	        	
+	        	String timestamp = reviewString.getString("ts");
+	        	String content = reviewString.getString("content");
+	        	int rating = reviewString.getInt("review_type");
+	        	Reviews rev = new Reviews(timestamp,content,rating);
+	        	reviewsList.add(rev);
+	        	Log.d("Review String " + i + " ", content);
+	        	reviewList.add(content);
 	        }
     	}
     	catch(Exception e){
     		
     	}
+    	reviewAdapter = new ReviewsAdapter(getActivity(),reviewsList);
+    	//TODO NEED TO FINISH REVIEWS ADAPTER BY SETTING THE IMAGE
         adapter = new ArrayAdapter<String>(getActivity(),R.layout.review, R.id.gsearchtitle, reviewList);
-        setListAdapter(adapter);
+        //setListAdapter(adapter); //PASS IN REVIEWSADAPTER
+        setListAdapter(reviewAdapter);
     }
 }
 }

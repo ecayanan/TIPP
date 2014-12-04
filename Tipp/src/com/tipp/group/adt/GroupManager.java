@@ -11,9 +11,10 @@ import android.os.Bundle;
 
 public class GroupManager {
 
-	private List<GroupJoined> gj;
+	private ArrayList<GroupJoined> gj;
 	private List<GroupNotJoined> gnj;
 	private String user_ID;
+	private Double user_Rating;
 	
 	public GroupManager(JSONObject obj){
 		gj = new ArrayList<GroupJoined>();
@@ -24,8 +25,11 @@ public class GroupManager {
 		try {
 			JSONArray groupNotJoinedJSON = obj.getJSONArray("groupsNotJoined");
 	        JSONArray groupJoinedJSON = obj.getJSONArray("groupsJoined");
-	       
+	        JSONObject userRatingJSON = obj.getJSONObject("rating");
 	        //Log.d("ONPOSTEXECUTE", "starting post execute");
+	        
+	        user_Rating = userRatingJSON.getDouble("AVG(review_type)");
+	        
 	        for(int i = 0; i < groupNotJoinedJSON.length(); i++)
 	        {
 	        	JSONObject childGroupJSON = groupNotJoinedJSON.getJSONObject(i);
@@ -39,6 +43,7 @@ public class GroupManager {
 	                JSONObject childGroupJSON = groupJoinedJSON.getJSONObject(i);
 		        	GroupJoined group = new GroupJoined (childGroupJSON.getString("name"));
 	                group.setGroupId(childGroupJSON.getInt("id"));
+	                group.setGroupRating(childGroupJSON.getInt("avg"));
 	                gj.add(group);                         
 	        }
 		} catch (JSONException e) {
@@ -74,12 +79,20 @@ public class GroupManager {
 			groupNames.add(((GroupNotJoined) gnj.toArray()[i]).getGroupId());
 		return groupNames;
 	}
-	
+	public ArrayList<Integer> getGroupJoinedRating(){
+		ArrayList<Integer> groupRatings = new ArrayList<Integer>();
+		for(int i = 0; i < gj.size(); i++)
+			groupRatings.add(((GroupJoined) gj.toArray()[i]).getGroupRating());
+		return groupRatings;
+	}	
 	public Bundle getGroupJoinedBundle(){
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("groupMemberStringArray", getGroupJoinedName());
 		bundle.putIntegerArrayList("groupIds", getGroupJoinedId());
+		bundle.putIntegerArrayList("groupRatings",getGroupJoinedRating());
+		bundle.putParcelableArrayList("groupJoined", gj);
 		bundle.putString("user_ID", user_ID);
+		bundle.putDouble("user_Rating", user_Rating);
 		//Log.d("groupmanager userid=", user_ID);
 		return bundle;
 	}

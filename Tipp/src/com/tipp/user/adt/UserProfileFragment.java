@@ -2,9 +2,15 @@ package com.tipp.user.adt;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import com.tipp.R;
+
+import org.json.JSONObject;
+
+
+
+
 import com.facebook.Session; 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,19 +32,30 @@ import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.LoginButton;
 
 
+import com.tipp.R;
+import com.tipp.adapters.GroupJoinedAdapter;
+import com.tipp.group.adt.GroupJoined;
+
+
+
 public class UserProfileFragment extends ListFragment {
 	ArrayAdapter<String> adapter;
     ArrayList <String> groupNames;
     ArrayList <Integer> groupIds;
+    ArrayList <Integer> groupRatings;
+    ArrayList<GroupJoined> groupJoinedList;
+    GroupJoinedAdapter groupAdapter;
 	private int grp;
 	private String currentUserId = "";
 	private String userName = "";
 	private Bitmap bitmap;
-	
+
+	private String rating;
+
+
 	//FACEBOOK STUFF
 	private static final String TAG = "UserProfileFragment";
 	private UiLifecycleHelper uiHelper;
-
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,11 +63,16 @@ public class UserProfileFragment extends ListFragment {
 		View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
 		currentUserId = getArguments().getString("user_ID");
 		userName = getArguments().getString("user_Name");
+		double ratingVal = getArguments().getDouble("user_Rating");
+		rating = new DecimalFormat("#.##").format(ratingVal);
+		Log.d("RATING", rating + "");
 		TextView nameTxt = (TextView) view.findViewById(R.id.textView1);
 		nameTxt.setText(userName);
+		TextView ratingTxt = (TextView) view.findViewById(R.id.textView2);
+		ratingTxt.setText("Average User Rating: " + rating);
 		//Log.d("USERNAME", userName);
 		new GetProfilePicture().execute(new String[] {"https://graph.facebook.com/" + currentUserId + "/picture?type=large"});
-		
+
 		LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
 		authButton.setFragment(this);
 		
@@ -75,7 +97,7 @@ public class UserProfileFragment extends ListFragment {
 //                }
             }
         });
-		
+
 		return view;
 	}
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -85,13 +107,19 @@ public class UserProfileFragment extends ListFragment {
         //Log.d("groupFRagment userid = ", currentUserId);
   	  	groupIds = getArguments().getIntegerArrayList("groupIds");
         groupNames = getArguments().getStringArrayList("groupMemberStringArray");
+        groupRatings = getArguments().getIntegerArrayList("groupRatings");
+        groupJoinedList = getArguments().getParcelableArrayList("groupJoined");
+        Log.d("PASSED GROUPJOINEDlIST", "PASSED GROUPJOINEDLIST");
         super.onActivityCreated(savedInstanceState);
-        adapter = new ArrayAdapter<String>(getActivity(),R.layout.group_view, R.id.gsearchtitle, groupNames);
-        setListAdapter(adapter);
+
+        adapter = new ArrayAdapter<String>(getActivity(),R.layout.profile_group_ratings_list, R.id.textView1, groupNames);
+        groupAdapter = new GroupJoinedAdapter(getActivity(),groupJoinedList);
+        setListAdapter(groupAdapter);
         // Facebook Log out & Share
         uiHelper = new UiLifecycleHelper(getActivity(), callback);
         uiHelper.onCreate(savedInstanceState);
-	}
+      }	
+
 
     private class GetProfilePicture extends AsyncTask<String,Integer,Bitmap> { 
     	URL imageURL;
@@ -145,6 +173,7 @@ public class UserProfileFragment extends ListFragment {
         uiHelper.onResume();
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -156,6 +185,7 @@ public class UserProfileFragment extends ListFragment {
             public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
                 Log.e("Activity", String.format("Error: %s", error.toString()));
             }
+
 
             @Override
             public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {

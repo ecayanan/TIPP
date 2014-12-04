@@ -5,13 +5,17 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.tipp.user.adt.User;
 
-public class GroupJoined implements Group{
+public class GroupJoined implements Parcelable{
 	
 	private String name = "";
 	private int groupId;
 	private List<User>members;
+	private int avgGroupRating;
 	
 	public GroupJoined(String name){ 
 		setName(name);
@@ -21,7 +25,7 @@ public class GroupJoined implements Group{
 	public void setName(String groupName) {
 		this.name = groupName;
 	}
-	@Override
+
 	public String getName() {
 		return name;
 	}
@@ -40,5 +44,24 @@ public class GroupJoined implements Group{
 
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
+	}
+	public int getGroupRating(){
+		return this.avgGroupRating;
+	}
+	public void setGroupRating(int groupRating)
+	{
+		this.avgGroupRating = groupRating;
+	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		
 	}
 }
