@@ -14,9 +14,8 @@
             android:divider="#b1689f"
             android:dividerHeight="1dp"
             android:scrollbarStyle="outsideInset"
-            android:scrollbarThumbVertical="@drawable/svt"
             android:scrollbarTrackVertical="@drawable/scb"
-            android:scrollbarSize="3dip"
+            android:scrollbarSize="2dp"
             android:fastScrollEnabled="true"
  
            />

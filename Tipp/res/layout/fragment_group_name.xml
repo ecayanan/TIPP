@@ -37,7 +37,7 @@
             android:layout_weight="1.00"
             android:scaleType="fitCenter"
             android:background="@drawable/textlines"
-            android:src="@drawable/reviewfinal"
+            android:src="@drawable/reviewcurrent"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"  />
  

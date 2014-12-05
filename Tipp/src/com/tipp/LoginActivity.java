@@ -60,6 +60,7 @@ public class LoginActivity extends FragmentActivity {
 	private FragmentManager fm = getSupportFragmentManager();
     private FragmentTransaction transaction = fm.beginTransaction();
     private OriginFragment of;
+    private OriginFragment g;
     private Bundle bundle = new Bundle();
     
     private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
@@ -216,7 +217,12 @@ public class LoginActivity extends FragmentActivity {
 	    } else {
 	        // otherwise present the splash screen
 	        // and ask the person to login.
-	    	
+	    	/*g = new OriginFragment();
+	    	setContentView(R.layout.activity_origin);
+	    	bundle.putString("SESSION_ID", "10152567282303533");
+	    	g.setArguments(bundle);
+	    	transaction.replace(R.id.main_container, g);
+	    	transaction.commit();*/
 	        showFragment(SPLASH, false);
 	    }
 	}

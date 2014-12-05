@@ -11,7 +11,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="3"
                 android:text=""
-                android:textSize="23dp"
+                android:textSize="18dp"
                 android:paddingLeft="7dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="13dp"

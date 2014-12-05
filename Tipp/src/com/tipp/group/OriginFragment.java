@@ -53,6 +53,8 @@ public class OriginFragment extends Fragment{
 			    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 				btnGroup.setImageResource(R.drawable.addgroupcurrent);
 				btnSearch.setImageResource(R.drawable.ssearch);
+				btnProfile.setImageResource(R.drawable.profile);
+				
 				new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"});
 			}
 		});
@@ -61,6 +63,7 @@ public class OriginFragment extends Fragment{
 			public void onClick(View v) {
 				btnSearch.setImageResource(R.drawable.ssearchcurrent);
 				btnGroup.setImageResource(R.drawable.addgroup);
+				btnProfile.setImageResource(R.drawable.profile);
 				
 				startOnSearchFragment(groupManager.getGroupNotJoinedBundle());
 			}
@@ -70,6 +73,9 @@ public class OriginFragment extends Fragment{
 			public void onClick(View v) {
 				  final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 			      imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+			      btnProfile.setImageResource(R.drawable.profilecurrent);
+				  btnGroup.setImageResource(R.drawable.addgroup);
+				  btnSearch.setImageResource(R.drawable.ssearch);
 			      FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 			      UserProfileFragment userProfileFragment = new UserProfileFragment();
 			      Bundle bundle = groupManager.getGroupJoinedBundle();

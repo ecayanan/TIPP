@@ -60,10 +60,9 @@
             android:dividerHeight="1dp"
             android:fastScrollEnabled="true"
             android:paddingLeft="4dp"
-            android:scrollbarSize="3dip"
+            android:scrollbarSize="2dp"
             android:scrollbarStyle="outsideInset"
-            android:scrollbarThumbVertical="@drawable/svt"
-            android:scrollbarTrackVertical="@drawable/scb" />
+            android:scrollbarThumbVertical="@drawable/svt"/>
     </LinearLayout>
 
     <RelativeLayout

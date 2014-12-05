@@ -21,13 +21,13 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="#26abd8"
-                android:textSize="23dp" />
+                android:textSize="18dp" />
      
              <ImageView
                  android:id="@+id/imageView1"
                  android:layout_width="50dp"
                  android:layout_height="30dp"
-                 android:padding='5dp'
+                 android:padding='7dp'
                  android:layout_alignParentRight="true"
                  android:layout_centerVertical="true"
                  android:height="1dp"
