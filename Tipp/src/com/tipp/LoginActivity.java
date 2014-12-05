@@ -44,6 +44,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.tipp.group.OriginFragment;
 
 
@@ -71,6 +72,10 @@ public class LoginActivity extends FragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+	    
+	    
+
+	    
 	    try {
 	   
 	        PackageInfo info = getPackageManager().getPackageInfo(
@@ -95,6 +100,10 @@ public class LoginActivity extends FragmentActivity {
 	    fragments[SPLASH] = fm.findFragmentById(R.id.splashFragment);
 	    fragments[SELECTION] = fm.findFragmentById(R.id.selectionFragment);
 
+	    // GOOGLE ANALYTICS
+	    //Get a Tracker (should auto-report)
+	    ((MyApplication) getApplication()).getTracker(MyApplication.TrackerName.APP_TRACKER);
+	    
 	    FragmentTransaction transaction = fm.beginTransaction();
 	    for(int i = 0; i < fragments.length; i++) {
 	        transaction.hide(fragments[i]);
@@ -118,10 +127,26 @@ public class LoginActivity extends FragmentActivity {
 	    transaction.commit();
 	}
 	
+	
+//	@Override
+//	protected void onStart() {
+//	    // TODO Auto-generated method stub
+//	    super.onStart();
+//	    //Get an Analytics tracker to report app starts &amp; uncaught exceptions etc.
+//	    GoogleAnalytics.getInstance(this).reportActivityStart(this);
+//	}
+	
+//	@Override
+//	protected void onStop() {
+//		
+//	}
+	
 	@Override
 	public void onResume() {
 	    super.onResume();
 	    uiHelper.onResume();
+	    //Get an Analytics tracker to report app starts &amp; uncaught exceptions etc.
+	    GoogleAnalytics.getInstance(this).reportActivityStart(this);
 	    isResumed = true;
 	}
 
@@ -129,6 +154,8 @@ public class LoginActivity extends FragmentActivity {
 	public void onPause() {
 	    super.onPause();
 	    uiHelper.onPause();
+	    //Stop the analytics tracking
+	    GoogleAnalytics.getInstance(this).reportActivityStop(this);
 	    isResumed = false;
 	}
 	
