@@ -12,7 +12,7 @@ import android.os.Bundle;
 public class GroupManager {
 
 	private ArrayList<GroupJoined> gj;
-	private List<GroupNotJoined> gnj;
+	private ArrayList<GroupNotJoined> gnj;
 	private String user_ID;
 	private Double user_Rating;
 	
@@ -100,6 +100,7 @@ public class GroupManager {
 		Bundle bundle = new Bundle();
 		bundle.putStringArrayList("groupStringArray", getGroupNotJoinedName());
 		bundle.putIntegerArrayList("groupIds", getGroupNotJoinedId());
+		bundle.putParcelableArrayList("groupNotJoined",gnj);
 		bundle.putString("user_ID", user_ID);
 		return bundle;
 	}

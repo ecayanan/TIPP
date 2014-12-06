@@ -2,7 +2,10 @@ package com.tipp.group.adt;
 
 import java.util.List;
 
-public class GroupNotJoined implements Group{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class GroupNotJoined implements Parcelable{
 	
 	private String name = "";
 	private int groupId;
@@ -13,12 +16,12 @@ public class GroupNotJoined implements Group{
 		//members = new ArrayList();
 	}
 
-	@Override
+	
 	public String getName() {
 		return name;
 	}
 
-	@Override
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -29,5 +32,19 @@ public class GroupNotJoined implements Group{
 
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
+	}
+
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		
 	}
 }

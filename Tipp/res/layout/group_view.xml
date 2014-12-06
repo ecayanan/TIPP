@@ -16,6 +16,5 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="13dp"
                 android:background="#FFF"
-                android:textColor="#26abd8"
-                android:ellipsize="end" />    
+                android:textColor="#26abd8" />    
     </LinearLayout>

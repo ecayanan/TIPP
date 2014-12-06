@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
+import com.facebook.widget.LikeView;
 import com.facebook.widget.LoginButton;
 
 
@@ -77,6 +78,9 @@ public class UserProfileFragment extends ListFragment {
 		authButton.setFragment(this);
 		
 		View shareButton = view.findViewById(R.id.button_share);
+		
+		LikeView likeView = (LikeView) view.findViewById(R.id.like_view);
+        likeView.setObjectId("1519468441635922");
         
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override

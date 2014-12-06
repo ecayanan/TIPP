@@ -32,6 +32,8 @@ import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import com.tipp.R;
+import com.tipp.adapters.GroupNotJoinedAdapter;
+import com.tipp.group.adt.GroupNotJoined;
      
      
 public class OnSearchListFragment extends ListFragment{
@@ -42,6 +44,9 @@ public class OnSearchListFragment extends ListFragment{
     ArrayList <Integer> groupIds;
 	private int grp;
 	private String currentUserId = "";
+	private ArrayList<GroupNotJoined> groupNotJoinedList;
+	private GroupNotJoinedAdapter groupAdapter;
+	
 	
 	public void searchFilterText(String str){
 		searchStr = str;
@@ -138,9 +143,11 @@ public class OnSearchListFragment extends ListFragment{
        //Log.d("onsearchlistfragment userid = ",currentUserId);
 	   groupIds = getArguments().getIntegerArrayList("groupIds");
        groupNames = getArguments().getStringArrayList("groupStringArray");
+       groupNotJoinedList = getArguments().getParcelableArrayList("groupNotJoined");
        super.onActivityCreated(savedInstanceState);
        adapter = new ArrayAdapter<String>(getActivity(),R.layout.light_blue, R.id.gsearchtitle, groupNames);
-       setListAdapter(adapter);
+       groupAdapter = new GroupNotJoinedAdapter(getActivity(),groupNotJoinedList);
+       setListAdapter(groupAdapter);
 
      }
 
@@ -152,8 +159,9 @@ public class OnSearchListFragment extends ListFragment{
     	 
     	 //get string at position
     	 //use that string at remove
-    	 String remove_group = adapter.getItem(position);
-    	 adapter.remove(remove_group);
+    	 GroupNotJoined remove_group = groupAdapter.getItem(position);
+    	 grp = remove_group.getGroupId();
+    	 groupAdapter.remove(remove_group);
     	 
     	 new JoinGroup().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/joinGroups.php"});
      }
