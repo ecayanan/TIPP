@@ -63,6 +63,7 @@ public class GroupMemberFragment extends ListFragment {
      	  Bundle bundle = new Bundle();
      	  String memberId = (String) memberIDList.toArray()[position];
      	  String memberName = (String) memberList.toArray()[position];
+     	  bundle.putString("reviewType", "personal");
      	  bundle.putString("memberId",memberId ); //Who receives the message
      	  bundle.putString("user_name",memberName ); //Name of who receives the message
      	  bundle.putInt("groupId", groupId); // The group that this review is a part of

@@ -44,6 +44,17 @@
    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="58dp">
+
+       <ImageButton
+           android:id="@+id/btnGlobalReview"
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="1.00"
+           android:background="@drawable/textlines"
+           android:paddingBottom="10dp"
+           android:paddingTop="10dp"
+           android:scaleType="fitCenter"
+           android:src="@drawable/members" />
  
         <ImageButton
             android:id="@+id/btnReviews"

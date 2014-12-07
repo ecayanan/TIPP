@@ -27,6 +27,7 @@ public class GroupNameFragment extends Fragment {
 		
 		final ImageButton btnReview = (ImageButton)view.findViewById(R.id.btnReviews);
 		final ImageButton btnMember = (ImageButton)view.findViewById(R.id.btnMembers);
+		final ImageButton btnGlobalReview = (ImageButton)view.findViewById(R.id.btnGlobalReview);
 		final ImageButton btnBackk = (ImageButton)view.findViewById(R.id.btnBack);
 		
 		btnBackk.setOnClickListener(new OnClickListener(){
@@ -37,23 +38,12 @@ public class GroupNameFragment extends Fragment {
 	            fm.popBackStack(); 
 			}
 		});
-		/*final Button btnWrite = (Button)view.findViewById(R.id.btnWrite);
-		btnWrite.setOnClickListener(new OnClickListener(){
 
-			@Override
-			public void onClick(View v) {
-				
-				//btnReview.setImageResource(R.drawable.reviewcurrent);
-				//btnMember.setImageResource(R.drawable.members);
-				startWriteFragment(v);
-			}
-			
-		});*/
 		btnReview.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				
+				btnGlobalReview.setImageResource(R.drawable.review);
 				btnReview.setImageResource(R.drawable.reviewcurrent);
 				btnMember.setImageResource(R.drawable.members);
 				startReviewFragment(v);
@@ -61,10 +51,22 @@ public class GroupNameFragment extends Fragment {
 			
 		});
 		
+		btnGlobalReview.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				btnGlobalReview.setImageResource(R.drawable.reviewcurrent);
+				btnReview.setImageResource(R.drawable.review);
+				btnMember.setImageResource(R.drawable.members);
+				startGlobalReviewFragment(v);
+			}
+			
+		});
+		
 		btnMember.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				
+				btnGlobalReview.setImageResource(R.drawable.review);
 				btnReview.setImageResource(R.drawable.review);
 				btnMember.setImageResource(R.drawable.memberscurrent);
 				startMemberFragment(v);
@@ -87,6 +89,17 @@ public class GroupNameFragment extends Fragment {
         GroupReviewFragment grf = new GroupReviewFragment();
         grf.setArguments(this.getArguments());
         fragmentTransaction.replace(R.id.group_name_container, grf);
+        fragmentTransaction.commit();
+	}
+	
+	public void startGlobalReviewFragment(View v){
+		Bundle bundle = new Bundle();
+		bundle.putString("reviewType", "global");
+		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        CreateReviewFragment crf = new CreateReviewFragment();
+        crf.setArguments(bundle);
+        fragmentTransaction.replace(R.id.main_container,  crf);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 	}
 	

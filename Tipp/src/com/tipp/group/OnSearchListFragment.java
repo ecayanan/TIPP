@@ -50,9 +50,9 @@ public class OnSearchListFragment extends ListFragment{
 	
 	public void searchFilterText(String str){
 		searchStr = str;
-		if(adapter != null)
+		if(groupAdapter != null)
 		{
-			adapter.getFilter().filter(searchStr);
+			groupAdapter.getFilter().filter(searchStr);
 
 		} 
 	}
@@ -111,7 +111,7 @@ public class OnSearchListFragment extends ListFragment{
 					{
 						Toast.makeText(getActivity(), "Need to type in a string",
 	                           Toast.LENGTH_LONG).show();
-					} else if(adapter.getCount() == 0 && !searchStr.equals(""))
+					} else if(groupAdapter.getCount() == 0 && !searchStr.equals(""))
 					{
 						View view = getView();
 						Button createButton = (Button) view.findViewById(R.id.createGroupButton);
