@@ -4,7 +4,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
- 
+        
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" >
             <TextView
                 android:id="@+id/gsearchtitle"
                 android:layout_width="match_parent"
@@ -17,5 +20,17 @@
                 android:paddingBottom="13dp"
                 android:background="#FFF"
                 android:textColor="#0D134E"
-                android:ellipsize="end" />    
+                android:ellipsize="end" />   
+                
+            <ImageView
+                 android:id="@+id/imageView1"
+                 android:layout_width="20dp"
+                 android:layout_height="30dp"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:padding="7dp"
+                 android:src="@drawable/forward_btn"
+                 android:width="1dp" />
+     
+        </RelativeLayout>
     </LinearLayout>

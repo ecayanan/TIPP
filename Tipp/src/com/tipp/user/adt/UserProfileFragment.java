@@ -31,6 +31,7 @@ import com.facebook.widget.LoginButton;
 import com.tipp.R;
 import com.tipp.adapters.GroupJoinedAdapter;
 import com.tipp.group.adt.GroupJoined;
+import com.tipp.group.adt.GroupNotJoined;
 
 
 
@@ -124,12 +125,12 @@ public class UserProfileFragment extends ListFragment {
            	 
            	 //get string at position
            	 //use that string at remove
-           	 String remove_group = adapter.getItem(position);
-           	 adapter.remove(remove_group);
-           	adapter = new ArrayAdapter<String>(getActivity(),R.layout.profile_group_ratings_list, R.id.textView1, groupNames);
-            groupAdapter = new GroupJoinedAdapter(getActivity(),groupJoinedList);
+            GroupJoined remove_group = groupAdapter.getItem(position);
+           	grp = remove_group.getGroupId();
+           	groupAdapter.remove(remove_group);
             setListAdapter(groupAdapter);
-                Toast.makeText( getActivity().getBaseContext()  , "Long Clicked " +position, Toast.LENGTH_SHORT).show();
+            
+                Toast.makeText( getActivity().getBaseContext()  , "Group Deleted", Toast.LENGTH_SHORT).show();
                 return true;
             }
         };

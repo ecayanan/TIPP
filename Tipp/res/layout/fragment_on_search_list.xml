@@ -21,7 +21,7 @@
             android:layout_marginLeft="5dp"
             android:paddingLeft="4dp"
             android:layout_marginRight="5dp"
-            android:divider="#26abd8"
+            android:divider="#b1689f"
             android:dividerHeight="1dp"
             android:scrollbarStyle="outsideInset"
             android:scrollbarSize="2dp"

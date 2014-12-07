@@ -49,7 +49,36 @@
         android:layout_width="match_parent"
         android:layout_height="237dp"
         android:orientation="vertical" >
+        
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal" >
+        
+        <TextView
+            android:id="@+id/gR"
+            android:layout_width="113dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:text="Group Name"
+            android:textColor="#0D134E" />
 
+        <TextView
+            android:id="@+id/Group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:text="Group Rating"
+            android:textColor="#0D134E" />
+
+		</LinearLayout>
+    
         <ListView
             android:id="@android:id/list"
             android:layout_width="wrap_content"
@@ -57,7 +86,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1.59"
-            android:divider="#26abd8"
+            android:divider="#b1689f"
             android:dividerHeight="1dp"
             android:fastScrollEnabled="true"
             android:paddingLeft="4dp"

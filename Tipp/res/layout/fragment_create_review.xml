@@ -57,7 +57,7 @@
 				    android:layout_height="0px"
 				    android:layout_marginLeft="5dp"
 				    android:layout_marginRight="5dp"
-				    android:layout_weight="0.75"
+				    android:layout_weight="0.42"
 				    android:divider="#b1689f"
 				    android:dividerHeight="1dp"
 				    android:fastScrollEnabled="true"
@@ -77,10 +77,12 @@
 		
 			        <requestFocus />
 			    </EditText>
-			    <RelativeLayout 
-			      android:layout_width="fill_parent" 
-			      android:layout_height="wrap_content"
-			      android:orientation="horizontal" >
+
+			    <RelativeLayout
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="0.02"
+			        android:orientation="horizontal" >
 
 			        <TextView
 			            android:id="@+id/textCount"
@@ -93,14 +95,18 @@
 			            android:textSize="25dp"
 			            android:textColor="#0D134E" />
 
-			        <RatingBar
-			            android:id="@+id/ratingBar1"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:layout_alignParentLeft="true"
-			            android:layout_alignParentTop="true"
-			            android:numStars="5"
-			            android:stepSize="1" />
+					<RatingBar
+					    android:id="@+id/ratingBar1"
+					    style="@style/tippRatingBar"
+					    android:layout_width="wrap_content"
+					    android:layout_height="50dp"
+					    android:layout_alignParentLeft="true"
+					    android:layout_alignParentTop="true"
+					    android:numStars="5" >
+					    
+					</RatingBar>
+			        
+			        
 			
 			    </RelativeLayout>
 			</LinearLayout>

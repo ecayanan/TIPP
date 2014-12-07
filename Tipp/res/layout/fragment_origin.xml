@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Group Manager"
-            android:textColor="#26abd8"
+            android:textColor="#b1689f"
             android:paddingTop="3dp"
             android:textSize="30dp" />
  
