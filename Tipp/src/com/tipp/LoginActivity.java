@@ -241,7 +241,7 @@ public class LoginActivity extends FragmentActivity {
 	        }); 
 	        Request.executeBatchAsync(request);
 	        
-	        //killActivity();		
+		
 	    } else {
 	        // otherwise present the splash screen
 	        // and ask the person to login.
