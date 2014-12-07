@@ -1,9 +1,21 @@
 package com.tipp.user.adt;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -46,6 +58,7 @@ public class UserProfileFragment extends ListFragment {
 	private String currentUserId = "";
 	private String userName = "";
 	private Bitmap bitmap;
+	private int groupid;
 
 	private String rating;
 
@@ -123,13 +136,15 @@ public class UserProfileFragment extends ListFragment {
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long id) {
             	grp = (Integer) groupIds.toArray()[position];
            	 
-           	 //get string at position
-           	 //use that string at remove
-            GroupJoined remove_group = groupAdapter.getItem(position);
-           	grp = remove_group.getGroupId();
-           	groupAdapter.remove(remove_group);
-            setListAdapter(groupAdapter);
-            
+	           	 //get string at position
+	           	 //use that string at remove
+	            GroupJoined remove_group = groupAdapter.getItem(position);
+	            groupid = remove_group.getGroupId();
+	           	grp = remove_group.getGroupId();
+	           	groupAdapter.remove(remove_group);
+	            setListAdapter(groupAdapter);
+				new DeleteGroup().execute(new String[]{"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/deleted.php"});
+
                 Toast.makeText( getActivity().getBaseContext()  , "Group Deleted", Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -139,6 +154,79 @@ public class UserProfileFragment extends ListFragment {
       }	
 
 
+	private class DeleteGroup extends AsyncTask<String,Integer,String> {
+	    String data = "";
+	    String Content = "";
+	    String searchtext = "";
+	   
+	    protected void onPreExecute() {
+	        // NOTE: You can call UI Element here.
+	         
+	        //Start Progress Dialog (Message)
+	       
+	         
+	        try{
+	            // Set Request parameter
+	                    //searchtext = searchview.getQuery().toString();
+	            data +="?" + URLEncoder.encode("groupid", "UTF-8") + "=" + groupid + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId;
+	            Log.d("UPF userid = ", currentUserId);
+	            Log.d("UPF groupid =", groupid+"");
+
+	        } catch (UnsupportedEncodingException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	         
+	    }        
+	    protected String doInBackground(String... urls) {
+	        JSONObject result = null;
+	        DefaultHttpClient client = new DefaultHttpClient();
+	        HttpGet httpGet = new HttpGet(urls[0]); // Don't do this
+	        Log.d("JSON Thing","lets get started");
+	        //test.setText("before try");
+	        try {
+	           
+	            // Defined URL  where to send data
+		        Log.d("URL", urls[0]+data);
+	            URL url = new URL(urls[0] + data);
+	               
+	           // Send POST data request
+	 
+	           URLConnection conn = url.openConnection();
+	           conn.setDoOutput(true);
+	           OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+	           wr.write( data );
+	           wr.flush();
+	       
+	           // Get the server response
+	             
+	           BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	           StringBuilder sb = new StringBuilder();
+	           String line = null;
+	         
+	             // Read Server Response
+	             while((line = reader.readLine()) != null)
+	                 {
+	                        // Append server response in string
+	                        sb.append(line + "");
+	                 }
+	             
+	             // Append Server Response To Content String
+	            Content = sb.toString();
+	        } catch (Exception e) {
+	           
+	            StringWriter sw = new StringWriter();
+	            e.printStackTrace(new PrintWriter(sw));
+	
+	        } // Don't do this
+	        //return result;
+	        return Content;
+	    }
+	
+	    protected void onPostExecute(String result) {
+	    }
+	}
+	
     private class GetProfilePicture extends AsyncTask<String,Integer,Bitmap> { 
     	URL imageURL;
     	protected void onPreExecute() {}	

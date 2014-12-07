@@ -29,7 +29,7 @@ public class GroupManager {
 	        JSONObject userRatingJSON = obj.getJSONObject("rating");
 	        //Log.d("ONPOSTEXECUTE", "starting post execute");
 	        
-	        user_Rating = userRatingJSON.getDouble("AVG(review_type)");
+	        user_Rating = userRatingJSON.getDouble("avg");
 	        
 	        for(int i = 0; i < groupNotJoinedJSON.length(); i++)
 	        {
