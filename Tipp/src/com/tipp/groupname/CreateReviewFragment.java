@@ -63,6 +63,12 @@ public class CreateReviewFragment extends ListFragment {
 			memberid = getArguments().getString("memberId");
 		}
 		else{
+
+			currentUserId = getArguments().getString("user_ID");
+			memberName = getArguments().getString("user_name");
+			groupid = getArguments().getInt("groupid");	
+			Log.d("CRF GROUP ID", groupid +"");
+			memberid = currentUserId;
 			memberName = "All Members";
 			broadcast = true;
 		}
@@ -108,14 +114,9 @@ public class CreateReviewFragment extends ListFragment {
 					adapter = new ArrayAdapter<String>(getActivity(),R.layout.review_view, R.id.gsearchtitle, reviewList);
 					ratingScore =  rating.getRating();
 					setListAdapter(adapter);
-					if(reviewType.contentEquals("personal"))
-					{
+					//if(reviewType.contentEquals("personal"))
 						new SendReview().execute(new String[]{"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/createReview.php"});
-					} else
-					{
-						new BroadcastReview().execute(new String[]{"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/createReview.php"});
 
-					}
 					rating.setRating(0);
 				}
 			}
@@ -133,77 +134,7 @@ public class CreateReviewFragment extends ListFragment {
 		return view;
 	}
 
-	private class BroadcastReview extends AsyncTask<String,Integer,String> {
-	    String data = "";
-	    String Content = "";
-	    String searchtext = "";
-	   
-	    protected void onPreExecute() {
-	        // NOTE: You can call UI Element here.
-	         
-	        //Start Progress Dialog (Message)
-	       
-	         
-	        try{
-	            // Set Request parameter
-	                    //searchtext = searchview.getQuery().toString();
-	            data +="?" + URLEncoder.encode("groupid", "UTF-8") + "=" + groupid + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId + "&" + URLEncoder.encode("receiver","UTF-8") + "=" + memberid + "&" + URLEncoder.encode("content","UTF-8") + "=" + URLEncoder.encode(review,"UTF-8") + "&" + URLEncoder.encode("rating","UTF-8") + "=" + URLEncoder.encode(ratingScore + "", "UTF-8");
-	            Log.d("CRF user_ID = ", currentUserId);
-	            Log.d("CRF member_ID = ",""+memberid);
-	        } catch (UnsupportedEncodingException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	        }
-	         
-	    }        
-	    protected String doInBackground(String... urls) {
-	        JSONObject result = null;
-	        DefaultHttpClient client = new DefaultHttpClient();
-	        HttpGet httpGet = new HttpGet(urls[0]); // Don't do this
-	        Log.d("JSON Thing","lets get started");
-	        //test.setText("before try");
-	        try {
-	           
-	            // Defined URL  where to send data
-		        Log.d("URL", urls[0]+data);
-	            URL url = new URL(urls[0] + data);
-	               
-	           // Send POST data request
-	 
-	           URLConnection conn = url.openConnection();
-	           conn.setDoOutput(true);
-	           OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-	           wr.write( data );
-	           wr.flush();
-	       
-	           // Get the server response
-	             
-	           BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	           StringBuilder sb = new StringBuilder();
-	           String line = null;
-	         
-	             // Read Server Response
-	             while((line = reader.readLine()) != null)
-	                 {
-	                        // Append server response in string
-	                        sb.append(line + "");
-	                 }
-	             
-	             // Append Server Response To Content String
-	            Content = sb.toString();
-	        } catch (Exception e) {
-	           
-	            StringWriter sw = new StringWriter();
-	            e.printStackTrace(new PrintWriter(sw));
 	
-	        } // Don't do this
-	        //return result;
-	        return Content;
-	    }
-	
-	    protected void onPostExecute(String result) {
-	    }
-	}
 	
 	private class SendReview extends AsyncTask<String,Integer,String> {
 	    String data = "";
@@ -219,7 +150,7 @@ public class CreateReviewFragment extends ListFragment {
 	        try{
 	            // Set Request parameter
 	                    //searchtext = searchview.getQuery().toString();
-	            data +="?" + URLEncoder.encode("groupid", "UTF-8") + "=" + groupid + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId + "&" + URLEncoder.encode("receiver","UTF-8") + "=" + memberid + "&" + URLEncoder.encode("content","UTF-8") + "=" + URLEncoder.encode(review,"UTF-8") + "&" + URLEncoder.encode("rating","UTF-8") + "=" + URLEncoder.encode(ratingScore + "", "UTF-8");
+	            data +="?" + URLEncoder.encode("groupid", "UTF-8") + "=" + groupid + "&" + URLEncoder.encode("userid","UTF-8") + "=" + currentUserId + "&" + URLEncoder.encode("receiver","UTF-8") + "=" + memberid + "&" + URLEncoder.encode("content","UTF-8") + "=" + URLEncoder.encode(review,"UTF-8") + "&" + URLEncoder.encode("rating","UTF-8") + "=" + URLEncoder.encode(ratingScore + "", "UTF-8") + "&" + URLEncoder.encode("broadcast","UTF-8") + "=" + URLEncoder.encode(broadcast + "","UTF-8");
 	            Log.d("CRF user_ID = ", currentUserId);
 	            Log.d("CRF member_ID = ",""+memberid);
 	        } catch (UnsupportedEncodingException e) {

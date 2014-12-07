@@ -93,10 +93,11 @@ public class GroupNameFragment extends Fragment {
 	}
 	
 	public void startGlobalReviewFragment(View v){
-		Bundle bundle = new Bundle();
+		Bundle bundle = this.getArguments();
 		bundle.putString("reviewType", "global");
 		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         CreateReviewFragment crf = new CreateReviewFragment();
+        //crf.setArguments(this.getArguments());
         crf.setArguments(bundle);
         fragmentTransaction.replace(R.id.main_container,  crf);
         fragmentTransaction.addToBackStack(null);

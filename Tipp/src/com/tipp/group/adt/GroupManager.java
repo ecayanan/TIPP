@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.util.Log;
 
 public class GroupManager {
 
@@ -44,6 +45,7 @@ public class GroupManager {
 		        	GroupJoined group = new GroupJoined (childGroupJSON.getString("name"));
 	                group.setGroupId(childGroupJSON.getInt("id"));
 	                group.setGroupRating(childGroupJSON.getInt("avg"));
+	                Log.d("GROUP MANAGER", childGroupJSON.getInt("id") + "");
 	                gj.add(group);                         
 	        }
 		} catch (JSONException e) {

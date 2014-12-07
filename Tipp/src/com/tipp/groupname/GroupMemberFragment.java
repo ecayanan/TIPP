@@ -70,8 +70,9 @@ public class GroupMemberFragment extends ListFragment {
      	  bundle.putString("user_ID", currentUserId); // The one sending the message
      	  CreateReviewFragment crf = new CreateReviewFragment();
      	  FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+     	  fragmentTransaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up,  R.anim.slide_out_down);
      	  crf.setArguments(bundle);
-     	  fragmentTransaction.replace(R.id.main_container, crf);
+     	  fragmentTransaction.add(R.id.main_container, crf);
      	  fragmentTransaction.addToBackStack(null);
      	  fragmentTransaction.commit();
     }
