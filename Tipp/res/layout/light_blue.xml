@@ -20,7 +20,7 @@
                 android:paddingTop="10dp"
                 android:singleLine="true"
                 android:text=""
-                android:textColor="#26abd8"
+                android:textColor="#0D134E"
                 android:textSize="18dp" />
      
              <ImageView

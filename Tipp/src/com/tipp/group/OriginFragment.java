@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class OriginFragment extends Fragment{
 		final ImageButton btnGroup = (ImageButton) view.findViewById(R.id.btnGroup);
 		final ImageButton btnSearch = (ImageButton) view.findViewById(R.id.btnSearch);
 		final ImageButton btnProfile = (ImageButton) view.findViewById(R.id.btnProfile);
+		
 		btnGroup.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -73,9 +75,7 @@ public class OriginFragment extends Fragment{
 			public void onClick(View v) {
 				  final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 			      imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-			      btnProfile.setImageResource(R.drawable.profilecurrent);
-				  btnGroup.setImageResource(R.drawable.addgroup);
-				  btnSearch.setImageResource(R.drawable.ssearch);
+
 			      FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 			      UserProfileFragment userProfileFragment = new UserProfileFragment();
 			      Bundle bundle = groupManager.getGroupJoinedBundle();
@@ -83,6 +83,9 @@ public class OriginFragment extends Fragment{
 			      userProfileFragment.setArguments(bundle);
 			      fragmentTransaction.replace(R.id.origin_container, userProfileFragment);
 			      fragmentTransaction.commit();
+			      btnProfile.setImageResource(R.drawable.profilecurrent);
+				  btnGroup.setImageResource(R.drawable.addgroup);
+				  btnSearch.setImageResource(R.drawable.ssearch);
 			}
 		});
 		

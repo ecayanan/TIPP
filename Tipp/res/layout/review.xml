@@ -23,7 +23,7 @@
             android:paddingRight="7dp"
             android:paddingTop="10dp"
             android:text="10:25:91"
-            android:textColor="#b1689f"
+            android:textColor="#0D134E"
             android:textSize="10dp" />
  
         <TextView
@@ -39,7 +39,7 @@
             android:paddingRight="7dp"
             android:paddingTop="10dp"
             android:text="Hello This is a test review"
-            android:textColor="#b1689f"
+            android:textColor="#0D134E"
             android:textSize="15dp" />
  
         <TextView

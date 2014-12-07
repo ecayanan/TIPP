@@ -8,23 +8,38 @@
         android:orientation="vertical"
         android:background="#FFF">
  
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         android:gravity="center"
         android:paddingBottom="5dp"
-        android:paddingTop="3dp">
+        android:paddingTop="3dp" >
  
         <TextView
             android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:gravity="center"
-            android:text="Yo APP"
-            android:textColor="#b1689f"
             android:paddingTop="3dp"
+            android:text="GROUP"
+            android:textColor="#b1689f"
             android:textSize="30dp" />
-    </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/textView1"
+            android:layout_marginTop="6dp"
+            android:background="#FFF"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back_button" />
+ 
+    </RelativeLayout>
  
    <LinearLayout
         android:layout_width="match_parent"

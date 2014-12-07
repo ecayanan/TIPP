@@ -5,13 +5,6 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-
-import org.json.JSONObject;
-
-
-
-
-import com.facebook.Session; 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,17 +15,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.LikeView;
 import com.facebook.widget.LoginButton;
-
-
 import com.tipp.R;
 import com.tipp.adapters.GroupJoinedAdapter;
 import com.tipp.group.adt.GroupJoined;
@@ -122,6 +117,24 @@ public class UserProfileFragment extends ListFragment {
         // Facebook Log out & Share
         uiHelper = new UiLifecycleHelper(getActivity(), callback);
         uiHelper.onCreate(savedInstanceState);
+        
+        OnItemLongClickListener listener = new OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long id) {
+            	grp = (Integer) groupIds.toArray()[position];
+           	 
+           	 //get string at position
+           	 //use that string at remove
+           	 String remove_group = adapter.getItem(position);
+           	 adapter.remove(remove_group);
+           	adapter = new ArrayAdapter<String>(getActivity(),R.layout.profile_group_ratings_list, R.id.textView1, groupNames);
+            groupAdapter = new GroupJoinedAdapter(getActivity(),groupJoinedList);
+            setListAdapter(groupAdapter);
+                Toast.makeText( getActivity().getBaseContext()  , "Long Clicked " +position, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        };
+ 
+        getListView().setOnItemLongClickListener(listener);
       }	
 
 

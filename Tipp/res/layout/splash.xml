@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_weight="0.34"
             android:gravity="center"
-            android:src="@drawable/smallpurplepyramid_transparent1" />
+            android:src="@drawable/tipp_without_tippnb" />
     </LinearLayout>
  
     <TextView

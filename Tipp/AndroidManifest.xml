@@ -11,7 +11,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/smallpurplepyramid_transparent1"
+        android:icon="@drawable/tipp_with_tipp"
         android:label="@string/app_name"
         android:theme="@style/NoActionBar" >
         <activity

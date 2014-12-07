@@ -5,16 +5,34 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
  
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" >
+     
             <TextView
                 android:id="@+id/gsearchtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text=""
-                android:textSize="18dp"
+                android:background="#FFF"
+                android:ellipsize="end"
+                android:paddingBottom="13dp"
                 android:paddingLeft="7dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="13dp"
-                android:background="#FFF"
-                android:textColor="#26abd8" />    
+                android:singleLine="true"
+                android:text="Test Text"
+                android:textColor="#0D134E"
+                android:textSize="18dp" />
+     
+             <ImageView
+                 android:id="@+id/imageView1"
+                 android:layout_width="20dp"
+                 android:layout_height="30dp"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:padding="7dp"
+                 android:src="@drawable/forward_btn"
+                 android:width="1dp" />
+     
+        </RelativeLayout>
+        
     </LinearLayout>

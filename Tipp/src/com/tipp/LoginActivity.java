@@ -34,6 +34,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.FacebookRequestError;
 import com.facebook.HttpMethod;
@@ -426,5 +427,7 @@ public class LoginActivity extends FragmentActivity {
             }
      
         }
+    
+
     
 }

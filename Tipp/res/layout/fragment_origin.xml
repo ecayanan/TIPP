@@ -14,6 +14,8 @@
         android:gravity="center"
         android:paddingBottom="5dp"
         android:paddingTop="3dp">
+        
+        
  
         <TextView
             android:id="@+id/textView1"
@@ -37,8 +39,8 @@
              android:layout_height="match_parent"
             android:layout_weight="1.00"
             android:scaleType="fitCenter"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp"
             android:background="@drawable/textlines"
             android:src="@drawable/addgroupcurrent" />
         
@@ -49,8 +51,8 @@
              android:layout_height="match_parent"
             android:layout_weight="1.00"
             android:scaleType="fitCenter"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp"
             android:background="@drawable/textlines"
             android:src="@drawable/ssearch" />
        
@@ -60,8 +62,8 @@
              android:layout_height="match_parent"
             android:layout_weight="1.00"
             android:scaleType="fitCenter"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp"
             android:background="@drawable/textlines"
             android:src="@drawable/profile" />
         

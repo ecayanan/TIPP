@@ -13,7 +13,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="13dp"
                 android:background="#FFF"
-                android:textColor="#26abd8"
+                android:textColor="#0D134E"
                 android:ellipsize="end" />  
 
         <TextView
@@ -28,7 +28,7 @@
             android:paddingLeft="7dp"
             android:paddingTop="10dp"
             android:text="5.0"
-            android:textColor="#b1689f"
+            android:textColor="#0D134E"
             android:textSize="20dp" />
    
 </RelativeLayout>

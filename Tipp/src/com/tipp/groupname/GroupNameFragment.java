@@ -27,6 +27,16 @@ public class GroupNameFragment extends Fragment {
 		
 		final ImageButton btnReview = (ImageButton)view.findViewById(R.id.btnReviews);
 		final ImageButton btnMember = (ImageButton)view.findViewById(R.id.btnMembers);
+		final ImageButton btnBackk = (ImageButton)view.findViewById(R.id.btnBack);
+		
+		btnBackk.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				android.support.v4.app.FragmentManager fm = getActivity()
+	                    .getSupportFragmentManager();
+	            fm.popBackStack(); 
+			}
+		});
 		/*final Button btnWrite = (Button)view.findViewById(R.id.btnWrite);
 		btnWrite.setOnClickListener(new OnClickListener(){
 

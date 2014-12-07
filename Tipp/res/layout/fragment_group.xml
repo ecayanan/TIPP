@@ -14,11 +14,7 @@
             android:divider="#26abd8"
             android:dividerHeight="1dp"
             android:scrollbarStyle="outsideInset"
-            android:scrollbarThumbVertical="@drawable/svt"
-            android:scrollbarSize="2dp"
-
- 
-           />
+            android:scrollbarSize="2dp"/>
  
 
 </LinearLayout>

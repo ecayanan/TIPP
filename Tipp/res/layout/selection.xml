@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:text="Welcome, you are now logged in."
-        android:textColor="#333"
+        android:textColor="#0D134E"
         android:textSize="18sp" />
 
 </LinearLayout>
