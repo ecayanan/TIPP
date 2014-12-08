@@ -43,7 +43,6 @@ public class GroupNameFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				btnGlobalReview.setImageResource(R.drawable.review);
 				btnReview.setImageResource(R.drawable.reviewcurrent);
 				btnMember.setImageResource(R.drawable.members);
 				startReviewFragment(v);
@@ -55,7 +54,6 @@ public class GroupNameFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				btnGlobalReview.setImageResource(R.drawable.reviewcurrent);
 				btnReview.setImageResource(R.drawable.review);
 				btnMember.setImageResource(R.drawable.members);
 				startGlobalReviewFragment(v);
@@ -66,7 +64,6 @@ public class GroupNameFragment extends Fragment {
 		btnMember.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				btnGlobalReview.setImageResource(R.drawable.review);
 				btnReview.setImageResource(R.drawable.review);
 				btnMember.setImageResource(R.drawable.memberscurrent);
 				startMemberFragment(v);
@@ -99,6 +96,7 @@ public class GroupNameFragment extends Fragment {
         CreateReviewFragment crf = new CreateReviewFragment();
         //crf.setArguments(this.getArguments());
         crf.setArguments(bundle);
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_down, R.anim.slide_in_up,  R.anim.slide_out_down);
         fragmentTransaction.replace(R.id.main_container,  crf);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();

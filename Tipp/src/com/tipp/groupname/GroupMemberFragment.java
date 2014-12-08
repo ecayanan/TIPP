@@ -148,7 +148,7 @@ public class GroupMemberFragment extends ListFragment {
     	catch(Exception e){
     		
     	}
-        adapter = new ArrayAdapter<String>(getActivity(),R.layout.review_view, R.id.gsearchtitle, memberList);
+        adapter = new ArrayAdapter<String>(getActivity(),R.layout.group_view, R.id.gsearchtitle, memberList);
         setListAdapter(adapter);
     }
     }

@@ -21,16 +21,6 @@
                 android:background="#FFF"
                 android:textColor="#0D134E"
                 android:ellipsize="end" />   
-                
-            <ImageView
-                 android:id="@+id/imageView1"
-                 android:layout_width="20dp"
-                 android:layout_height="30dp"
-                 android:layout_alignParentRight="true"
-                 android:layout_centerVertical="true"
-                 android:padding="7dp"
-                 android:src="@drawable/forward_btn"
-                 android:width="1dp" />
      
         </RelativeLayout>
     </LinearLayout>

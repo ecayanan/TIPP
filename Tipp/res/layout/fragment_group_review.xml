@@ -2,8 +2,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/linearlayoutgroupreviews" >
+    android:id="@+id/linearlayoutgroupreviews"
+    android:background="@drawable/backgroundlight" >
    
+
+     
         <ListView
             android:id="@android:id/list"
             android:layout_width="wrap_content"
@@ -16,13 +19,9 @@
             android:scrollbarStyle="outsideInset"
             android:scrollbarSize="2dp"
             android:fastScrollEnabled="true"
- 
+            android:background="#FFF"
            />
         
-        <ImageView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:adjustViewBounds="true"
-			android:src="@drawable/backgroundlight" />
+       
  
 </LinearLayout>
