@@ -97,8 +97,8 @@ public class UserProfileFragment extends ListFragment {
             	if (FacebookDialog.canPresentShareDialog(getActivity(), FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
                     FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
                             .setName("Check out Tipp!")
-                            .setLink("www.tipp.com") //addlink to YOUTUBE VIDEO
-                            .setDescription("This app is changing my life!")
+                            .setLink("nardecky.com/tipp.php") //addlink to YOUTUBE VIDEO
+                            .setDescription("This app is enhancing my life!")
                             .setPicture("https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/15458_1402187463405576_1052654193964303576_n.jpg?oh=ec7c9a4d9e41c7f77ac8e90a204eddd9&oe=551883DB&__gda__=1427161689_6fa2e07236bad814fe8bad4e5f3cf13a")
                             //.setPicture("http://lh3.googleusercontent.com/-P4JBVTv_kSI/AAAAAAAAAAI/AAAAAAAAAAs/bZptjIhkWu4/s265-c-k-no/photo.jpg")
                             .build();

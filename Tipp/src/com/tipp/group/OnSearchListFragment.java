@@ -122,9 +122,11 @@ public class OnSearchListFragment extends ListFragment{
 							@Override
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
-								Toast.makeText(getActivity(), "Listened Succesfully",
+								Toast.makeText(getActivity(), "Group Added",
 				                           Toast.LENGTH_LONG).show();
+								
 								new AddToGroup().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/add.php"});
+								sv.setQuery("", false);
 							}
 							
 						});
@@ -162,6 +164,8 @@ public class OnSearchListFragment extends ListFragment{
     	 GroupNotJoined remove_group = groupAdapter.getItem(position);
     	 grp = remove_group.getGroupId();
     	 groupAdapter.remove(remove_group);
+    	 Toast.makeText(getActivity(), "Group Joined",
+                 Toast.LENGTH_LONG).show();
     	 
     	 new JoinGroup().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/joinGroups.php"});
      }
