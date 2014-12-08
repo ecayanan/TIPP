@@ -14,9 +14,8 @@
                 android:paddingBottom="13dp"
                 android:background="#FFF"
                 android:textColor="#0D134E"
-                android:ellipsize="end" />  
-
-        <TextView
+                android:ellipsize="end" />
+        <!-- <TextView
             android:id="@+id/gRatingText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,6 +28,17 @@
             android:paddingTop="10dp"
             android:text="5.0"
             android:textColor="#0D134E"
-            android:textSize="20dp" />
+            android:textSize="20dp" />-->
+
+<ImageView
+    android:id="@+id/gRatingText1"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:layout_marginRight="22dp"
+    android:height="1dp"
+    android:src="@drawable/ratingfour"
+    android:width="1dp" />
    
 </RelativeLayout>

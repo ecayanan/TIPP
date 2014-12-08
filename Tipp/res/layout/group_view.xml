@@ -21,7 +21,7 @@
                 android:singleLine="true"
                 android:text="Test Text"
                 android:textColor="#0D134E"
-                android:textSize="18dp" />
+                android:textSize="18dp"  />
      
              <ImageView
                  android:id="@+id/imageView1"

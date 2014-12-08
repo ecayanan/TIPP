@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tipp.R;
@@ -30,11 +31,36 @@ public class GroupJoinedAdapter extends ArrayAdapter<GroupJoined> {
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     View rowView = inflater.inflate(R.layout.profile_group_ratings_list, parent, false);
     TextView reviewText = (TextView) rowView.findViewById(R.id.textView1);
-    TextView ratingText = (TextView) rowView.findViewById(R.id.gRatingText1);
+    ImageView ratingImg = (ImageView) rowView.findViewById(R.id.gRatingText1);
     GroupJoined group = values.get(position);
+    int ratingValue = group.getGroupRating();
+    
     reviewText.setText(group.getName());
     //Log.d("BEFORE GETGROUPRATING","BEFORE GROUPRATING");
-    ratingText.setText(group.getGroupRating()+"");
+    if(ratingValue >= 0 && ratingValue <1)
+    {
+    	ratingImg.setImageResource(R.drawable.ratingempty);
+    }else if(ratingValue >=1 && ratingValue < 2)
+    {
+    	ratingImg.setImageResource(R.drawable.ratingone);
+
+    }else if(ratingValue >=2 && ratingValue < 3)
+    {
+    	ratingImg.setImageResource(R.drawable.ratingtwo);
+
+    }else if(ratingValue >=3 && ratingValue < 4)
+    {
+    	ratingImg.setImageResource(R.drawable.ratingthree);
+
+    }else if(ratingValue >=4 && ratingValue < 5)
+    {
+    	ratingImg.setImageResource(R.drawable.ratingfour);
+
+    } else
+    {
+    	ratingImg.setImageResource(R.drawable.ratingfull);
+
+    }
     //Log.d("AFTER GETGROUPRATING", "AFTER GROUPRATING");
     //ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
     //textView.setText(values[position]);
