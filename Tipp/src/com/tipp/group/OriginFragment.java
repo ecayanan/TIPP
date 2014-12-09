@@ -35,6 +35,7 @@ import com.tipp.user.adt.UserProfileFragment;
 public class OriginFragment extends Fragment{
     private GroupManager groupManager;
     private String user_ID;
+    private int requestNum = 0;
     
 
 	@Override
@@ -51,6 +52,7 @@ public class OriginFragment extends Fragment{
 		btnGroup.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				requestNum = 0;
 				final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 			    imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
 				btnGroup.setImageResource(R.drawable.addgroupcurrent);
@@ -63,11 +65,13 @@ public class OriginFragment extends Fragment{
 		btnSearch.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				requestNum=1;
 				btnSearch.setImageResource(R.drawable.ssearchcurrent);
 				btnGroup.setImageResource(R.drawable.addgroup);
 				btnProfile.setImageResource(R.drawable.profile);
-				
-				startOnSearchFragment(groupManager.getGroupNotJoinedBundle());
+				new DownloadJSONTask().execute(new String[] {"http://ec2-54-191-237-123.us-west-2.compute.amazonaws.com/test.php"});
+
+				//startOnSearchFragment(groupManager.getGroupNotJoinedBundle());
 			}
 		});
 		btnProfile.setOnClickListener(new OnClickListener(){
@@ -145,7 +149,13 @@ public class OriginFragment extends Fragment{
           try {
           	  groupManager = new GroupManager(result);
           	  groupManager.setUserID(user_ID);
-              startGroupFragment(groupManager.getGroupJoinedBundle());
+          	  if(requestNum == 0)
+          	  {
+          		  startGroupFragment(groupManager.getGroupJoinedBundle());
+          	  } else if(requestNum == 1)
+          	  {
+          		 startOnSearchFragment(groupManager.getGroupNotJoinedBundle());
+          	  }
           } catch (Exception e) {
               Log.d("EXCEPTION", e.getMessage());
           } 
